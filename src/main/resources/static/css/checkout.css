@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+a,p{
+font-size:25px;
+}
+
+body{
+	font-family: 'Cormorant Infant', serif;
+	background-color: #F9F4F5; 
+	}

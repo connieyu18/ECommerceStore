@@ -14,11 +14,9 @@
     src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous">
-
+	
 </script>
-  <style> 
- 
-  </style>
+
 </head>
 <body>
 <div class="wrapper"> 
@@ -54,9 +52,7 @@
 		    </form>
 		  </div>
 		</nav>
-		<img class="img" style="width: 100%" src="../img/rose.png"> 
-		<iframe allowTransparency="true" src="//www.keepandshare.com/calendar26/embed_calendar.php?i=2818488&style=r&layout=grid&fmt=std&soffset=0&n=12&rn=7&mbtc=35003E&mbc=FFAFAA&dbc=C0C0C0&hc=FFEDD3&pdc=FFFFFF&fdc=FFFFFF&mntc=FF5B99&navicon=caret&sr=y&sparse=y&fsz=13&rw=460&rh=310&themeChoice=777" width="100%" height="100%" scrolling="no" frameborder="0"></iframe><!-- For help on embedding calendars go to http://developer.keepandshare.com/embedding/day-scroll-calendar.php -->
-	</div>
+		<img class="img" style="width: 100%" src="../img/rose.png"> 		
  	</div>
 </body>
 </html>

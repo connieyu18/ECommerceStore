@@ -1,0 +1,31 @@
+.wrapper{
+	width: 100%; 
+	position: relative; 
+	display: inline-block; 
+	top:20px; 
+}
+.container{
+	width:75%; 
+	padding:20px; 
+	position: relative; 
+	display: inline-block; 
+	top:30px; 
+	}
+	
+table{
+	width: 75%; 
+	background-color:white;
+}
+span{
+	margin: 20px;	
+}
+
+.btn{
+	background-color: #eee0e0;
+	border:none; 
+	color:gray;
+}
+
+
+
+

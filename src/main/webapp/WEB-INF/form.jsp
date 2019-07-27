@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>   
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cormorant+Infant|Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="form/style.css">
 
 
 <!DOCTYPE html>
@@ -23,75 +24,6 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Login Page</title>
-    <style> 
-    	.wrapper{
-    		width: 1000px; 
-    		height:700px;
-    	/* 	margin: 40px; */
-    		margin: 10%; 
-    		text-align:center; 
-    		position: relative; 
-    		display: inline-block; 
-    		font-family: 'Cormorant Infant', serif;
-    		border:solid gray 1px; 
-    		padding:20px 5px 200px 5px; 
-    		background-color: white; 
-    		border:none; 
-    		overflow: scroll;
-    		font-size:30px;
-    		
-    		
-    	}
-
-    	
-    	.wrappertop{
-    		width: 1000px; 
-    		height:400px;
-    	/* 	margin: 40px; */
-    		margin: 10%; 
-    		text-align:center; 
-    		position: relative; 
-    		display: inline-block; 
-    		font-family: 'Cormorant Infant', serif;
-    		border:solid gray 1px; 
-    		padding:20px 5px 200px 5px; 
-    		background-color: white; 
-    		border:none; 
-    	
-    	}
-    	.leftBox{
-    		width: 48%;
-    		position: relative; 
-    		display: inline-block; 
-    		
-    	}
-    	.rightBox{
-    		width: 48%;
-    		position: relative; 
-    		display: inline-block; 
-    		vertical-align:top; 
-    		
-    	}
-    	body{		
-			background-image: url("https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"); 
-			background-repeat: no-repeat;
-			background-size: 100% 100%;
-			/* opacity: 0.2; */
-		}
-		.button{
-			font-size: 20px; 
-			font-family: 'Cormorant Infant', serif;
-		}
-    	
-    	th,td{
-    	font-size: 20px; 
-    	}
-		label{
-			font-size:20px; 
-		}
-		
-		
-    </style>
 </head>
 <body>
 
@@ -106,7 +38,7 @@
 		  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 		    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 		      <li class="nav-item active">
-		        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+		        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="/productList">Product List</a>
