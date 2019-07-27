@@ -40,15 +40,7 @@ public class UsersController {
 	public String mainPage() {
 		return "redirect:/home";
 	}
-	@RequestMapping(value = {"/productList"})
-    public String home(Principal principal, Model model) {
-		System.out.println("home");
-		if (principal == null) 
-			return "redirect:/home";
-		String email = principal.getName();
-        model.addAttribute("currentUser", userService.findByEmail(email));
-        return "productList.jsp";
-    }
+
 	
 	@RequestMapping("/registration")
 	public String registerForm(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
@@ -167,14 +159,7 @@ public class UsersController {
 //	}
 
 //	 
-    @RequestMapping("/admin")
-    public String adminPage(Principal principal, Model model) {
-        String email = principal.getName();
-        
-        model.addAttribute("currentUser", userService.findByEmail(email));
-        return "adminPage.jsp";
-    }
-//    
+
 //    @RequestMapping("/test")
 //    public String test(Model model) {
 //    	List<User> users = userService.findAdmins();

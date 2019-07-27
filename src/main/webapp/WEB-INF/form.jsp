@@ -52,7 +52,12 @@
 		    </ul>
 		    
 		    <div class="form-inline my-2 my-lg-0">
-		     	<a class="nav-link" href="/logout" style="color:purple" >Logout</a>
+		    	<form class="float-right" method="POST" action="/logout">
+					<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+					<button type="submit" class="nav-link" style="color:purple">Logout!</button>
+				</form>
+		     	
 			<form action="/search" method="post" >
 			
 <%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
