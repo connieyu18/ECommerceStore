@@ -6,46 +6,9 @@
       <link href="https://fonts.googleapis.com/css?family=Parisienne|Rochester&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Rochester&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cormorant+Infant|Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
+         <link rel="stylesheet" type="text/css" href="css/show.css">
+ 
 
-<style> 
-	body{
-		background-color:#FDFEFE; 
-		font-family: 'Cormorant Infant', serif;
-	}
-	a,p{
-		font-size:25px;
-	}
-	.footer{
-	 background-color:#FBEEE6; 
-	}
-	.gallery-wrap .img-big-wrap img {
-    height: 450px;
-    width: auto;
-    display: inline-block;
-    cursor: zoom-in;
-	}	
-
-
-	.gallery-wrap .img-small-wrap .item-gallery {
-	    width: 60px;
-	    height: 60px;
-	    border: 1px solid #ddd;
-	    margin: 7px 2px;
-	    display: inline-block;
-	    overflow: hidden;
-	}
-	
-	.gallery-wrap .img-small-wrap {
-	    text-align: center;
-	}
-	.gallery-wrap .img-small-wrap img {
-	    max-width: 100%;
-	    max-height: 100%;
-	    object-fit: cover;
-	    border-radius: 4px;
-	    cursor: zoom-in;
-	}
-</style>
 <!------ Include the above in your HEAD tag ---------->
 <div class="header">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">

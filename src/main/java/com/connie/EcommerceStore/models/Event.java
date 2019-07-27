@@ -51,29 +51,11 @@ public class Event {
 		protected void onUpdate() {
 			this.updatedAt = new Date();
 		}
-//		@OneToOne(fetch=FetchType.LAZY)
-//	    @JoinColumn(name="person_id")
-//	    private Person person;
-//	    
-		
-//		@ManyToMany(fetch = FetchType.LAZY)
-//	    @JoinTable(
-//	        name = "eventProduct", 
-//	        joinColumns = @JoinColumn(name = "event_id"), 
-//	        inverseJoinColumns = @JoinColumn(name = "product_id")
-//		)
-		
-		
-//	    @OneToMany(mappedBy="event", fetch = FetchType.LAZY)
-//	    private List<Product> products; 
+
 		@ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name="user_id")
 	    private User user; 
 	    
-
-		
-		
-
 
 		@ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name="product_id")
@@ -129,8 +111,6 @@ public class Event {
 		public void setUpdatedAt(Date updatedAt) {
 			this.updatedAt = updatedAt;
 		}
-
-
 
 		public Product getProduct() {
 			return product;

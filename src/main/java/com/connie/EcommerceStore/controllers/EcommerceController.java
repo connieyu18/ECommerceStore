@@ -1,5 +1,6 @@
 package com.connie.EcommerceStore.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.connie.EcommerceStore.models.Event;
 import com.connie.EcommerceStore.models.Product;
 import com.connie.EcommerceStore.models.User;
+import com.connie.EcommerceStore.services.ClientOrderService;
 import com.connie.EcommerceStore.services.EventService;
+import com.connie.EcommerceStore.services.OrderProductService;
 import com.connie.EcommerceStore.services.ProductService;
 import com.connie.EcommerceStore.services.UserService;
 import com.connie.EcommerceStore.validator.UserValidator;
@@ -32,19 +35,23 @@ public class EcommerceController {
 		private final EventService eventService;
 		private final UserValidator userValidator; 
 		private final UserService userService;
+
 		
-		public EcommerceController(ProductService productService, EventService eventService, UserValidator userValidator,UserService userService) {
+		public EcommerceController(ProductService productService, EventService eventService, UserValidator userValidator,UserService userService, ClientOrderService clientOrderService) {
 			this.productService = productService;
 			this.eventService = eventService;
 			this.userService=userService; 
 			this.userValidator=userValidator; 
+
 		}
 		
-		@RequestMapping("/home")
+		@RequestMapping("/")
 		public String home() {
 		return "home.jsp";
 		}
 		
+		
+
 		
 		@RequestMapping("/registration")
 	    public String registerForm(@ModelAttribute("user") User user, Model model) {
@@ -63,8 +70,8 @@ public class EcommerceController {
 	        // else, save the user in the database, save the user id in session, and redirect them to the /home route
 	    	User u = userService.registerUser(user); 
 	    	session.setAttribute("userId", u.getId()); 
-	    	return "redirect:/productList"; 
-//	    	return "login.jsp"; 
+	    	//return "redirect:/productList"; 
+	    	return "login.jsp"; 
 	    }
 	    
 	    @RequestMapping(value="/login", method=RequestMethod.POST)
@@ -83,10 +90,50 @@ public class EcommerceController {
 	        // else, add error messages and return the login page
 	    }
 		
+		@RequestMapping(value="/addProduct", method=RequestMethod.POST)
+		public String addProduct(@ModelAttribute("product") Product product) {
+			System.out.println(product.getName());
+//			use service to add product to db
+			productService.save(product);
+			return "redirect:/admin";
+		}
 		
+//		
+//		@RequestMapping("/edit/{id}")
+//	    public String edit(@PathVariable("id") Long id, @ModelAttribute("editProductObject") Product editProduct, Model model){
+//		Product product1=productService.findProduct(id);
+//		model.addAttribute("products", product1);
+//		return "admin.jsp";
+//		}
+//		
+//	    @RequestMapping(value= "/editProduct/{id}", method=RequestMethod.POST)
+//	    public String editProduct (@PathVariable("id") Long id, @Valid @ModelAttribute("editProductObject") Product product, BindingResult result) {
+//	    	if (result.hasErrors()) {
+//				System.out.println("bbb");
+//				return "admin.jsp";
+//			}
+//			else {
+////		    	Product product1=productService.findProduct(id);
+//				productService.updateProduct(product);
+//				return "redirect:/admin";
+//			}
+//	    }
+
+
+		@RequestMapping("/products/{id}/delete")
+		public String delete(@PathVariable("id") long id) {
+			productService.deleteProduct(id);
+			return "redirect:/admin";
+		}
+		
+		@RequestMapping("/admin")
+		public String admin(@ModelAttribute("product") Product product, Model model) {
+			Iterable <Product> allProducts = productService.getAllProducts();
+			model.addAttribute("products", allProducts);
+			return "admin.jsp";
+		}
 
 	
-
 		@RequestMapping("/productList")
 		public String productList(HttpSession session, Model model) {
 		Long userId=(Long)session.getAttribute("userId"); 
@@ -96,6 +143,8 @@ public class EcommerceController {
 		model.addAttribute("products", products1);
 		return "productList.jsp";
 		}
+		
+		
 		
 		@RequestMapping("/cart/{id}")
 		public String Cart(HttpSession session, @PathVariable Long id, Model model) {
@@ -192,36 +241,10 @@ public class EcommerceController {
 		
 		@RequestMapping("/removeEvent/{id}")
 		public String removeEvent(HttpSession session, @PathVariable("id") Long id) {
-//			
-//			Event event= eventService.findEvent(id);
-//			System.out.println("babab"+ productService.findProduct(id));
-//			if (cart.getId()==prod.getId() ) {
-//				cart.remove(i);
-//			}
-//			for(int i=0; i<cart.size();i++) {
-//				if (cart.get(i).getId()==prod.getId() ) {
-//					cart.remove(i);
-////					break;
-//				}
-//			}
-//			event.remove(eventService.findEvent(id));
-//			event.setAttribute("cart", event);
 			eventService.deleteEvent(id);
 			return "redirect:/newEvent";
 		}
 
-    		
-    		
-    		
-//    	
-//    	List<Product> usersProducts= u.getProducts(); 
-//    	usersProducts.add(product2); 
-//    	u.setProducts(usersProducts);
-//    	System.out.println(usersProducts);
-////    	model.addAttribute("products", usersProducts);
-////    	return "cart.jsp";
-//    	return "redirect:/cart";
-//		}
 //		
 		@RequestMapping("/cart")
 		public String Cart(HttpSession session, Model model) {
@@ -229,10 +252,8 @@ public class EcommerceController {
 	    	Long userId=(Long)session.getAttribute("userId"); 
 	    	User u=userService.findUserById(userId); 
 	    	model.addAttribute("user", u); 
-//	    	List<Product> usersProducts= u.getProducts(); 
-//	    	model.addAttribute("products", usersProducts);
 	    	System.out.println("bbb" + u.getProducts() );
-		return "cart.jsp";
+	    	return "cart.jsp";
 		}
 
 		@RequestMapping("/show/{id}")
@@ -242,9 +263,7 @@ public class EcommerceController {
 	    	model.addAttribute("user", u); 
 			Product product2= productService.findProduct(id); 
 			model.addAttribute("product", product2);
-			//search bar (show product by name) 
-//			model.addAttribute("productbyName", name); 
-		return "show.jsp";
+			return "show.jsp";
 		}
 		
 		@RequestMapping(value= "/search", method=RequestMethod.POST)
@@ -259,7 +278,6 @@ public class EcommerceController {
 				return "redirect:/productList"; 
 			}
 			System.out.println("in search111"+ productByName.getId());
-//			productByName.getId(); 
 			model.addAttribute("product",productByName);
 			return "redirect:/show/" + productByName.getId();
 //			return "redirect:/show/{id}"; //or redirect /login
@@ -268,7 +286,6 @@ public class EcommerceController {
 		
 		@RequestMapping(value="/showCategoryProduct", method=RequestMethod.POST)
 		public String ShowProductCategory( @RequestParam("category") String category, Model model) {
-//			System.out.println("in productcat"+ product.getCategory());
 			Product productByName= productService.findProductByCategory(category); 
 			return "redirect:/show/" + productByName.getId();
 		}
@@ -278,7 +295,7 @@ public class EcommerceController {
 			Long userId=(Long)session.getAttribute("userId"); 
 			User u=userService.findUserById(userId); 
 	    	model.addAttribute("user", u); 
-		return "showCategory.jsp";
+	    	return "showCategory.jsp";
 		}
 		
 
@@ -288,19 +305,17 @@ public class EcommerceController {
 		     User u=userService.findUserById(userId); 
 		     model.addAttribute("user",u);
 		     List<Event> event2= u.getEvents();
-		     
 			 model.addAttribute("allEvents",event2);
-			 
 			 model.addAttribute("products",productService.getAllProducts()); 
 			 return "form.jsp";
 			}
 			
-		    @RequestMapping("/events/new")
+	    @RequestMapping("/events/new")
 			public String newEvent(@ModelAttribute("event") Event Event) {
 				return "form.jsp";
 			}
 			
-			@RequestMapping(value="/addEvent", method=RequestMethod.POST)
+		@RequestMapping(value="/addEvent", method=RequestMethod.POST)
 			public String addEvent(HttpSession session, @Valid @ModelAttribute("event") Event event, @RequestParam("products") Long id, BindingResult result, Model model) {
 				if (result.hasErrors()) {
 					System.out.println("ddd"); 
@@ -310,37 +325,21 @@ public class EcommerceController {
 					Long userId=(Long)session.getAttribute("userId"); 
 				    User u=userService.findUserById(userId); 
 					List<Event> event2= u.getEvents(); 
-//					ArrayList<Event> alList= new ArrayList<Event> () ;
 					event.setUser(u);
-			    	//event2.add(event); 
-					//u.setEvents(event2);
 					event.setProduct(productService.findProduct(id));
 					Event event1= eventService.save(event); 
-//					System.out.println("aaaa" + question.getTags()); 
 					return "redirect:/newEvent" ;
 				}
 			}
 
-		
 		    
 	    @RequestMapping("/logout")
 	    public String logout(HttpSession session) {
 	        // invalidate session
 	    	session.invalidate();
 	        // redirect to login page
-	    	return "redirect:/home"; //or redirect /login
+	    	return "redirect:/"; //or redirect /login
 	    }
-//		@RequestMapping("/checkout/{id}")
-//		public String Checkout(HttpSession session, Model model) {
-//			System.out.println("in checkout");
-//	    	Long userId=(Long)session.getAttribute("userId"); 
-//	    	User u=userService.findUserById(userId); 
-//	    	model.addAttribute("user", u); 
-////	    	List<Product> usersProducts= u.getProducts(); 
-////	    	model.addAttribute("products", usersProducts);
-//	    	System.out.println("bbb" + u.getProducts() );
-//		return "cart.jsp";
-//		}
-		
+
 
 }

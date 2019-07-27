@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css?family=Parisienne|Rochester&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Parisienne|Rochester&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
 <link href="https://fonts.googleapis.com/css?family=Cormorant+Infant|Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html>
@@ -17,6 +19,8 @@
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     crossorigin="anonymous">
+   <link rel="stylesheet" type="text/css" href="css/productList.css">
+    
 
 <script
     src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
@@ -25,86 +29,7 @@
 </script>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style> 
-		.wrapper{
-			width:100%; 
-			font-family: 'Cormorant Infant', serif;
-;
-		}
-		body{
-		background-image: url("https://images.unsplash.com/photo-1480511361210-b1b966c8d614?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"); 
-		background-repeat: no-repeat;
-		
-/* 		 background-attachment: fixed; */
 
-		background-size: 100% 100%;
-		background-opacity: 0.2;
-		}
-		a,p{
-		font-size:20px;
-		}
-		.header{
-			height:350px; 
-			 background-color:#F9F4F5; 
-			 border: none;
-			 padding: 10px; 
-			 margin-bottom:70px; 
-			   
-		}
-		
-		
-		.content{
-			margin: 0% 5%; 
-			padding: 20px; 
-		}
-		.img-wrap{
-			max-width:100%;
-			max-height:300px;
-			margin:  3%; 
-		}
-		.title{
-			text-align: left; 
-			margin: 5%; 
-		}
-		.img-container{}
-			max-height:200px;
-			
-		}
-		.img-fluid{
-			position: relative; 
-		 	float: center; 
-		}
-		.bottomBox{
-			position: relative; 
-			display:inline-block;
-		}
-		
-		.rightBox{
-			position: relative; 
-			display:inline-block;
-			width:80%; 
-			float:center;
-		}
-		.leftBox{
-			position: relative; 
-			display:inline-block;
-			max-width:20%;
-			float:left; 
-		}
-		.fa-star{
-			color: tan; 
-		}
-		.card-product{
-			border:0px 25% solid black; 
-			padding: 7px; 
-		}
-		a{
-			margin: 2px; 
-		}
-		
-		
-		
-	</style> 
 </head>
 <body>
 <div class="wrapper"> 
@@ -119,7 +44,7 @@
 		  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 		    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 		      <li class="nav-item active">
-		        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+		        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="/productList">Product List</a>
@@ -129,6 +54,9 @@
 		      </li>
 		       <li class="nav-item">
 		        <a class="nav-link" href="/newEvent">Add Event</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="/admin">Admin</a>
 		      </li>
 		    </ul>
 		    
@@ -242,41 +170,6 @@
 
 
 
-
-<div class="card">
-	<!-- <article class="card-group-item">
-		<header class="card-header"><h6 class="title">Similar category </h6></header>
-		<div class="filter-content">
-			<div class="list-group list-group-flush">
-			  <a href="#" class="list-group-item">Cras justo odio <span class="float-right badge badge-secondary round">142</span> </a>
-			  <a href="#" class="list-group-item">Dapibus ac facilisis  <span class="float-right badge badge-secondary round">3</span>  </a>
-			  <a href="#" class="list-group-item">Morbi leo risus <span class="float-right badge badge-secondary round">32</span>  </a>
-			  <a href="#" class="list-group-item">Another item <span class="float-right badge badge-secondary round">12</span>  </a>
-			</div>  list-group .//
-		</div>
-	</article> card-group-item.//
-	<article class="card-group-item">
-		<header class="card-header"><h6 class="title">Color check</h6></header>
-		<div class="filter-content">
-			<div class="card-body">
-				<label class="btn btn-danger"style="background-color:tan; border:none">
-				  <input class="" type="checkbox" name="myradio" value="">
-				  <span class="form-check-label">Tan</span>
-				</label>
-				<label class="btn btn-success" style="background-color:pink; border:none">
-				  <input class="" type="checkbox" name="myradio" value="">
-				  <span class="form-check-label">Pink</span>
-				</label>
-				<label class="btn btn-primary" style="background-color:gray; border:none">
-				  <input class="" type="checkbox"  name="myradio" value="">
-				  <span class="form-check-label">Gray</span>
-				</label>
-			</div> card-body.//
-		</div>
-	</article> card-group-item.// -->
-</div> <!-- card.// -->
-
-
 <div class="card">
 	<article class="card-group-item">
 		<header class="card-header">
@@ -296,37 +189,8 @@
 			</div>
 			</div> <!-- card-body.// -->
 	</article> <!-- card-group-item.// -->
-	<!-- <article class="card-group-item">
-		<header class="card-header">
-			<h6 class="title">Selection </h6>
-		</header>
-			<div class="card-body">
-				<div class="custom-control custom-checkbox">
-					<span class="float-right badge badge-light round">52</span>
-				  	<input type="checkbox" class="custom-control-input" id="Check1">
-				  	<label class="custom-control-label" for="Check1">Samsung</label>
-				</div> form-check.//
-
-				<div class="custom-control custom-checkbox">
-					<span class="float-right badge badge-light round">132</span>
-				  	<input type="checkbox" class="custom-control-input" id="Check2">
-				 	<label class="custom-control-label" for="Check2">Black berry</label>
-				</div> form-check.//
-
-				<div class="custom-control custom-checkbox">
-					<span class="float-right badge badge-light round">17</span>
-				  	<input type="checkbox" class="custom-control-input" id="Check3">
-				  	<label class="custom-control-label" for="Check3">Samsung</label>
-				</div> form-check.//
-
-				<div class="custom-control custom-checkbox">
-					<span class="float-right badge badge-light round">7</span>
-				  	<input type="checkbox" class="custom-control-input" id="Check4">
-				  	<label class="custom-control-label" for="Check4">Other Brand</label>
-				</div> form-check.//
-			</div> card-body.//
-	</article> card-group-item.// -->
-</div> <!-- card.// -->
+	
+</div> 
 
 </div>
 	
@@ -335,7 +199,6 @@
  	
 				<div class="row">
 				<c:forEach var="i" items="${products}" >
-			<%-- 	 <c:if test="${product.getCategory()!=product.category}"> --%>
 	
 				<div class="col-md-4" >
 				 
@@ -356,8 +219,7 @@
 											<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
 										</li>
 									</ul>
-				<%-- 					<div class="label-rating"><c:out value="${i.review}"/></div>
-									<div class="label-rating"><c:out value="${i.order}"/></div> --%>
+
 								</div> <!-- rating-wrap.// -->
 						</figcaption>
 						<div class="bottom-wrap">

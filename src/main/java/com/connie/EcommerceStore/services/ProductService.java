@@ -56,13 +56,13 @@ public class ProductService {
 			return null; 
 		}
 	}
-    
-//    public Product findProductByNam(Product product)  {
-//        return productRepository.findAll(product);
-//    }
-//	public List<Product> findFlower() {
-//		// TODO Auto-generated mefindthod stub
-//		return productRepository.findFlowerProd(); 
-//	}
 	
+    public void deleteProduct(long id) {
+    	productRepository.deleteById(id);
+    }
+
+	public Product updateProduct(Product s){
+			return  productRepository.save(s);  
+	}
+
 }
