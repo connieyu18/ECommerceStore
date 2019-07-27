@@ -46,22 +46,7 @@ public class EcommerceController {
 		this.userValidator = userValidator;
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginUser(@Valid @RequestParam("email") String email, @RequestParam("password") String password,
-			RedirectAttributes redirectAttributes, Model model, HttpSession session) {
-		// if the user is authenticated, save their user id in session
-		boolean isAuthenticated = userService.authenticateUser(email, password);
-		if (isAuthenticated) {
-			User u = userService.findByEmail(email);
-			session.setAttribute("userId", u.getId());
-			return "redirect:/productList";
-		} else {
-//	    		model.addAttribute("error","Invalid Credentials.Please try again."); 
-			redirectAttributes.addFlashAttribute("error", "Invalid login");
-			return "redirect:/registration";
-		}
-		// else, add error messages and return the login page
-	}
+
 
 	@PostMapping(value = "/addProduct")
 	public String addProduct(@ModelAttribute("product") Product product) {
@@ -122,13 +107,13 @@ public class EcommerceController {
 	}
 
 	@RequestMapping("/cart/{id}")
-	public String Cart(HttpSession session, @PathVariable Long id, Model model) {
+	public String Cart(HttpSession session, @PathVariable Long id, Model model, Principal principal) {
 		System.out.println("in checkout");
 		Product product2 = productService.findProduct(id);
 		System.out.println(product2);
 		model.addAttribute("productsInCart", product2);
-		Long userId = (Long) session.getAttribute("userId");
-		User u = userService.findUserById(userId);
+		User u = addUserToModel(principal, model);
+
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
 			cart.put(product2, 1);
@@ -152,13 +137,16 @@ public class EcommerceController {
 	}
 
 	@RequestMapping("/cart/remove/{id}")
-	public String removeItemInCart(HttpSession session, @PathVariable Long id, Model model) {
+	public String removeItemInCart(HttpSession session, @PathVariable Long id, Model model, Principal principal) {
 		System.out.println("in checkout");
+		
 		Product product2 = productService.findProduct(id);
+		
 		System.out.println(product2);
+		
 		model.addAttribute("productsInCart", product2);
-		Long userId = (Long) session.getAttribute("userId");
-		User u = userService.findUserById(userId);
+		User u = addUserToModel(principal, model);
+
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
 			cart.put(product2, 1);
@@ -186,22 +174,10 @@ public class EcommerceController {
 
 	@RequestMapping("/remove/{id}")
 	public String remove(HttpSession session, @PathVariable("id") Long id) {
-//			ProductModel productModel = new ProductModel();
 		HashMap<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
-
-//			List<Product> cart = (List<Product>) session.getAttribute("cart");
-//			int index = this.exists(id, cart);
 		Product prod = productService.findProduct(id);
 		System.out.println("babab" + productService.findProduct(id));
-//			if (cart.getId()==prod.getId() ) {
-//				cart.remove(i);
-//			}
-//			for(int i=0; i<cart.size();i++) {
-//				if (cart.get(i).getId()==prod.getId() ) {
-//					cart.remove(i);
-////					break;
-//				}
-//			}
+
 		cart.remove(productService.findProduct(id));
 		session.setAttribute("cart", cart);
 		return "redirect:/cart";
@@ -247,7 +223,7 @@ public class EcommerceController {
 	}
 
 	@RequestMapping("/removeEvent/{id}")
-	public String removeEvent(HttpSession session, @PathVariable("id") Long id) {
+	public String removeEvent(@PathVariable("id") Long id) {
 		eventService.deleteEvent(id);
 		return "redirect:/newEvent";
 	}
@@ -278,11 +254,11 @@ public class EcommerceController {
 	}
 
 	@RequestMapping("/product/category")
-	public String ShowCat(HttpSession session, @RequestParam("email") String email,
+	public String ShowCat(Principal principal, @RequestParam("email") String email,
 			@ModelAttribute("showProductCat") Product productcat, Model model) {
-		Long userId = (Long) session.getAttribute("userId");
-		User u = userService.findUserById(userId);
-		model.addAttribute("user", u);
+		
+		User u = addUserToModel(principal, model);
+
 		return "showCategory.jsp";
 	}
 
@@ -296,14 +272,13 @@ public class EcommerceController {
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-	public String addEvent(HttpSession session, @Valid @ModelAttribute("event") Event event,
+	public String addEvent(Principal principal, @Valid @ModelAttribute("event") Event event,
 			@RequestParam("products") Long id, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			System.out.println("ddd");
 			return "form.jsp";
 		} else {
-			Long userId = (Long) session.getAttribute("userId");
-			User u = userService.findUserById(userId);
+			User u = addUserToModel(principal, model);
 			List<Event> event2 = u.getEvents();
 			event.setUser(u);
 			event.setProduct(productService.findProduct(id));
