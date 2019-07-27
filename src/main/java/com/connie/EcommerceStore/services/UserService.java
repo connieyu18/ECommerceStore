@@ -1,28 +1,29 @@
 package com.connie.EcommerceStore.services;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.connie.EcommerceStore.models.User;
+import com.connie.EcommerceStore.respositories.RoleRepository;
 import com.connie.EcommerceStore.respositories.UserRepository;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder)     {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     
-    // register user and hash their password
-    public User registerUser(User user) {
-        String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(hashed);
-        return userRepository.save(user);
-    }
-    
+   
     // find user by email
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -53,6 +54,29 @@ public class UserService {
                 return false;
             }
         }
+    }
+    
+//    ------------------------------------------------------------------
+    // 1
+    public void registerUser(User user) {
+    	createUserWithRole(user, "USER");
+    }
+     
+     // 2 
+    public void registerAdmin(User user) {
+    	createUserWithRole(user, "ADMIN");
+    }    
+    
+    // register user, add role and hash their password
+    private void createUserWithRole(User user, String role) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(roleRepository.findByName(role));
+        userRepository.save(user);
+    }
+
+    
+    public List<User> findAdmins() {
+    	return userRepository.findAllAdmin();
     }
 
 }
