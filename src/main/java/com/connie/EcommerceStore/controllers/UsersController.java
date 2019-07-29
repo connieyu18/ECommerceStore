@@ -32,6 +32,15 @@ public class UsersController {
 		this.userService = userService;
 		this.userValidator = userValidator;
 	}
+	
+
+	protected User addUserToModel(Principal principal, Model model) {
+		String email = principal.getName();
+		User u = userService.findByEmail(email);
+		model.addAttribute("currentUser", u);
+		return u;
+	}
+	
 	@RequestMapping("/home")
 	public String home() {
 		return "home.jsp";
@@ -50,7 +59,7 @@ public class UsersController {
 		}
 		return setUpRegistrationLoginPage(user, result, model);
 	}
-
+	
 	@PostMapping("/registration")
 	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
 		System.out.println("registration" + user);

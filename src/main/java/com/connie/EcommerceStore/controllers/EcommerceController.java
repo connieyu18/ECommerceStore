@@ -31,30 +31,25 @@ import com.connie.EcommerceStore.services.ProductService;
 import com.connie.EcommerceStore.services.UserService;
 import com.connie.EcommerceStore.validator.UserValidator;
 
+import aj.org.objectweb.asm.Type;
+
 @Controller
 public class EcommerceController {
 	private final ProductService productService;
 	private final EventService eventService;
-	private final UserValidator userValidator;
 	private final UserService userService;
+	private final UsersController usersConstroller;
 
-	public EcommerceController(ProductService productService, EventService eventService, UserValidator userValidator,
-			UserService userService) {
+	public EcommerceController(UsersController usersConstroller, ProductService productService, EventService eventService, UserService userService) {
 		this.productService = productService;
 		this.eventService = eventService;
 		this.userService = userService;
-		this.userValidator = userValidator;
+		this.usersConstroller = usersConstroller;
 	}
+	
 
 
 
-	@PostMapping(value = "/addProduct")
-	public String addProduct(@ModelAttribute("product") Product product) {
-		System.out.println(product.getName());
-//			use service to add product to db
-		productService.save(product);
-		return "redirect:/admin";
-	}
 
 //		
 //		@RequestMapping("/edit/{id}")
@@ -83,28 +78,17 @@ public class EcommerceController {
 		return "redirect:/admin";
 	}
 
-	@RequestMapping("/admin")
-	public String admin(@ModelAttribute("product") Product product, Principal principal, Model model) {
-		Iterable<Product> allProducts = productService.getAllProducts();
-		model.addAttribute("products", allProducts);
-		addUserToModel(principal, model);
-		return "admin.jsp";
-	}
+	
 
 	@RequestMapping(value = { "/productList" })
 	public String home(Principal principal, Model model) {
-		User u = addUserToModel(principal, model);
-		Iterable<Product> products1 = productService.getAllProducts();
-		model.addAttribute("products", products1);
+		User u = usersConstroller.addUserToModel(principal, model);
+		Iterable<Product> products = productService.getAllProducts();
+		System.out.println("products\n" + ((ArrayList<Product>) products).get(0).getName());
+		model.addAttribute("products", products);
 		return "productList.jsp";
 	}
 
-	private User addUserToModel(Principal principal, Model model) {
-		String email = principal.getName();
-		User u = userService.findByEmail(email);
-		model.addAttribute("currentUser", u);
-		return u;
-	}
 
 	@RequestMapping("/cart/{id}")
 	public String Cart(HttpSession session, @PathVariable Long id, Model model, Principal principal) {
@@ -112,7 +96,7 @@ public class EcommerceController {
 		Product product2 = productService.findProduct(id);
 		System.out.println(product2);
 		model.addAttribute("productsInCart", product2);
-		User u = addUserToModel(principal, model);
+		User u = usersConstroller.addUserToModel(principal, model);
 
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
@@ -145,7 +129,7 @@ public class EcommerceController {
 		System.out.println(product2);
 		
 		model.addAttribute("productsInCart", product2);
-		User u = addUserToModel(principal, model);
+		User u = usersConstroller.addUserToModel(principal, model);
 
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
@@ -195,7 +179,7 @@ public class EcommerceController {
 //		
 	@RequestMapping("/admin/products/new")
 	public String displayAddProductPage(@Valid @ModelAttribute("user") User user, Principal principal, Model model) {
-		addUserToModel(principal, model);
+		usersConstroller.addUserToModel(principal, model);
 		return "addProducts.jsp";
 	}
 
@@ -208,7 +192,7 @@ public class EcommerceController {
 
 	@RequestMapping("/cart")
 	public String Cart(Principal principal, Model model) {
-		User u = addUserToModel(principal, model);
+		User u = usersConstroller.addUserToModel(principal, model);
 		System.out.println("bbb" + u.getProducts());
 		return "cart.jsp";
 	}
@@ -216,7 +200,7 @@ public class EcommerceController {
 	@RequestMapping("/show/{id}")
 	public String ShowProduct(@PathVariable Long id, @ModelAttribute("searchProduct") String name, Principal principal,
 			Model model) {
-		User u = addUserToModel(principal, model);
+		User u = usersConstroller.addUserToModel(principal, model);
 		Product product2 = productService.findProduct(id);
 		model.addAttribute("product", product2);
 		return "show.jsp";
@@ -257,14 +241,14 @@ public class EcommerceController {
 	public String ShowCat(Principal principal, @RequestParam("email") String email,
 			@ModelAttribute("showProductCat") Product productcat, Model model) {
 		
-		User u = addUserToModel(principal, model);
+		User u = usersConstroller.addUserToModel(principal, model);
 
 		return "showCategory.jsp";
 	}
 
 	@RequestMapping("/newEvent")
 	public String newEvent(Principal principal, @ModelAttribute("event") Event event, Model model) {
-		User u = addUserToModel(principal, model);
+		User u = usersConstroller.addUserToModel(principal, model);
 		List<Event> event2 = u.getEvents();
 		model.addAttribute("allEvents", event2);
 		model.addAttribute("products", productService.getAllProducts());
@@ -278,7 +262,7 @@ public class EcommerceController {
 			System.out.println("ddd");
 			return "form.jsp";
 		} else {
-			User u = addUserToModel(principal, model);
+			User u = usersConstroller.addUserToModel(principal, model);
 			List<Event> event2 = u.getEvents();
 			event.setUser(u);
 			event.setProduct(productService.findProduct(id));
@@ -310,7 +294,7 @@ public class EcommerceController {
 //	public String ShowCat(HttpSession session, @RequestParam("email") String email,
 //			@ModelAttribute("showProductCat") Product productcat, Model model) {
 //		
-//		User u = addUserToModel(session, model);
+//		User u = usersConstroller.addUserToModel(session, model);
 //		return "showCategory.jsp";
 //	}
 

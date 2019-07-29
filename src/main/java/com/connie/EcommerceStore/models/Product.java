@@ -25,12 +25,15 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull(message = "Product name is required.")
+	
+	@Size(min=1)
 	private String name;
-	@Size(min = 1, message = "Description must be at least 1 character")
+	@Size(min = 3)
 	private String description;
+	
 	private String category;
 	private Double price;
+	@Size(min = 3)
 	private String pictureUrl;
 
 	@Column(updatable = false)

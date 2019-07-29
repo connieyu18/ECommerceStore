@@ -32,25 +32,22 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="css/productList.css">
-
-
-
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous">
-	
-</script>
-
 <link
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous">
+</script>
+
+<link rel="stylesheet" type="text/css" href="css/productList.css">
+
 </head>
-<body>
+<body style="padding: 2%">
 	<div class="wrapper">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<img class="img" style="width: 120px; height: 80px"
@@ -82,7 +79,8 @@
 					<form class="float-right" method="POST" action="/logout">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
-						<button type="submit" class="nav-link" style="color: purple">Logout!</button>
+						<button type="submit" class="nav-link btn btn-danger"
+							style="color: purple">Logout!</button>
 					</form>
 					<form action="/search" method="post">
 
@@ -96,25 +94,22 @@
 					</form>
 
 				</div>
+			</div>
 		</nav>
 		<div class="title">
-
 			<span style="font-size: 25px; right: 10px">WELCOME</span>
 			<h1
 				style="color: #E5CFCF; font-size: 60px; font-family: 'Petit Formal Script', cursive;">
-				<c:out value="${user.firstName}" />
-				<c:out value="${user.lastName}" />
+				<c:out value="${currentUser.firstName}" />
+				<c:out value="${currentUser.lastName}" />
 			</h1>
 			<br> <br>
 
 			<h1 style="float: center; color: gray">All Products</h1>
-
-
 		</div>
 	</div>
-	<div class="bottomBox">
-		<div class="leftBox">
-
+	<div class="row">
+		<div class="col col-lg-2">
 			<!--   SIDEBAR  -->
 			<div class="card">
 				<article class="card-group-item">
@@ -200,12 +195,6 @@
 				<!-- card-group-item.// -->
 			</div>
 			<!-- card.// -->
-
-
-
-
-
-
 			<div class="card">
 				<article class="card-group-item">
 					<header class="card-header">
@@ -227,65 +216,64 @@
 					<!-- card-body.// -->
 				</article>
 				<!-- card-group-item.// -->
-
 			</div>
-
-
-			<div class="row">
-
-				<c:forEach var="i" items="${products}">
-
-					<div class="col-md-4">
-
-						<figure class="card card-product">
-							<div class="img-wrap">
-								<div class="img-container">
-									<img class="img-fluid" style="height: 200px; float: center"
-										src="<c:out value="${i.pictureUrl}"/>" />
-								</div>
-							</div>
-							<figcaption class="info-wrap">
-								<h4 class="title">
-									<c:out value="${i.name}" />
-								</h4>
-								<p class="desc">
-									<c:out value="${i.description}" />
-								</p>
-								<div class="rating-wrap">
-									<ul class="rating-stars">
-										<li style="width: 80%" class="stars-active"><i
-											class="fa fa-star "></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i></li>
-										<li><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i></li>
-									</ul>
-
-								</div>
-								<!-- rating-wrap.// -->
-							</figcaption>
-							<div class="bottom-wrap">
-								<a href="/cart/${i.id}" class="btn btn-sm  float-right"
-									style="background-color: #E5CFCF">Order Now</a> <a
-									href="/show/${i.id}" class="btn btn-sm  float-right"
-									style="background-color: #E5CFCF">Details</a>
-								<div class="price-wrap h5">
-									<span class="price-new">$<c:out value="${i.price}" /></span>
-								</div>
-								<!-- price-wrap.// -->
-							</div>
-							<!-- bottom-wrap.// -->
-						</figure>
-
-					</div>
-					<!-- col // -->
-
-				</c:forEach>
-			</div>
-
-
 		</div>
+
+		<div class="col">
+
+			<c:forEach var="i" items="${products}">
+
+				<div class="col-md-3">
+
+					<figure class="card card-product">
+						<div class="img-wrap">
+							<div class="img-container">
+								<img class="img-fluid" style="height: 200px; float: center"
+									src="<c:out value="${i.pictureUrl}"/>" />
+							</div>
+						</div>
+						<figcaption class="info-wrap">
+							<h4 class="title">
+								<c:out value="${i.name}" />
+							</h4>
+							<p class="desc">
+								<c:out value="${i.description}" />
+							</p>
+							<div class="rating-wrap">
+								<ul class="rating-stars">
+									<li style="width: 80%" class="stars-active"><i
+										class="fa fa-star "></i><i class="fa fa-star"></i><i
+										class="fa fa-star"></i><i class="fa fa-star"></i><i
+										class="fa fa-star"></i></li>
+									<li><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+										class="fa fa-star"></i><i class="fa fa-star"></i><i
+										class="fa fa-star"></i></li>
+								</ul>
+
+							</div>
+							<!-- rating-wrap.// -->
+						</figcaption>
+						<div class="bottom-wrap">
+							<a href="/cart/${i.id}" class="btn btn-sm  float-right"
+								style="background-color: #E5CFCF">Order Now</a> <a
+								href="/show/${i.id}" class="btn btn-sm  float-right"
+								style="background-color: #E5CFCF">Details</a>
+							<div class="price-wrap h5">
+								<span class="price-new">$<c:out value="${i.price}" /></span>
+							</div>
+							<!-- price-wrap.// -->
+						</div>
+						<!-- bottom-wrap.// -->
+					</figure>
+
+				</div>
+				<!-- col // -->
+
+			</c:forEach>
+		</div>
+
+
+	</div>
 
 	</div>
 

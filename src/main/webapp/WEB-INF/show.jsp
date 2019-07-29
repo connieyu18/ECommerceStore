@@ -46,7 +46,7 @@
 				<li class="nav-item"><a class="nav-link" href="/newEvent">Add
 						Event</a></li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
+			<div class="form-inline my-2 my-lg-0">
 				<form class="float-right" method="POST" action="/logout">
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
@@ -57,15 +57,15 @@
 					placeholder="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0"
 					style="border-color: pink; color: black" type="submit">Search</button>
-			</form>
+			</div>
 		</div>
 	</nav>
 	<div class="title">
 		<h1
 			style="color: #E5CFCF; font-family: 'Petit Formal Script', cursive">
 			Welcome,
-			<c:out value="${user.firstName}" />
-			<c:out value="${user.lastName}" />
+			<c:out value="${currentUser.firstName}" />
+			<c:out value="${currentUser.lastName}" />
 		</h1>
 		<br>
 
@@ -73,11 +73,6 @@
 	</div>
 </div>
 <div class="container">
-
-	<hr>
-
-
-
 	<div class="card">
 		<div class="row">
 			<aside class="col-sm-5 border-right">
