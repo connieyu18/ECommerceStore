@@ -187,7 +187,7 @@
 											<h4 class="modal-title">Edit a product</h4>
 										</div>
 										<div class="modal-body">
-											<form:form id ='editForm' action="/editProduct/${i.getId()}" method="post">
+											<form:form id ='editForm' action="/editProduct/${i.getId()}" method="post" modelAttribute = "product">
 												<div class="form-group row">
 													<form:label path="name" class="col-sm-3 col-form-label">Product Name:</form:label>
 													<div class="col-sm-6">
@@ -198,17 +198,17 @@
 													<form:label path="description"
 														class="col-sm-3 col-form-label">Description:</form:label>
 													<div class="col-sm-6">
-														<form:input path="description" class="form-control" />
+														<form:input id="editDescription" path="description" class="form-control" />
 													</div>
 												</div>
 												<div class="form-group row">
 													<form:label path="category" class="col-sm-3 col-form-label">Category:</form:label>
 													<div class="col-sm-6">
-														<form:input path="category" class="form-control" />
+														<form:input id="editCategory" path="category" class="form-control" />
 													</div>
 												</div>
 												<div class="form-group row">
-													<form:label path="price" class="col-sm-3 col-form-label">Price:</form:label>
+													<form:label id="editPrice" path="price" class="col-sm-3 col-form-label">Price:</form:label>
 													<div class="col-sm-6">
 														<form:input path="price" 
 														 maxFractionDigits="2" class="form-control" />
@@ -218,7 +218,7 @@
 													<form:label path="pictureUrl"
 														class="col-sm-3 col-form-label">Picture url:</form:label>
 													<div class="col-sm-6">
-														<form:input path="pictureUrl" class="form-control" />
+														<form:input id="editPictureUrl" path="pictureUrl" class="form-control" />
 													</div>
 
 												</div>
