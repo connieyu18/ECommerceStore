@@ -63,10 +63,10 @@
   <div> <a href="#"> <img  class="img-fluid" src="<c:out value="${product.pictureUrl}"/>"/></a></div>
 </div> <!-- slider-product.// -->
 <div class="img-small-wrap">
-  <div class="item-gallery"> <img  src="../img/redrose.jpg"> </div>
+<!--   <div class="item-gallery"> <img  src="../img/redrose.jpg"> </div>
   <div class="item-gallery"> <img  src="../img/pinkrose.jpg"> </div>
   <div class="item-gallery"> <img  src="../img/coffeecake.jpg"> </div>
-  <div class="item-gallery"> <img  src="../img/butterflycake.jpg"> </div>
+  <div class="item-gallery"> <img  src="../img/butterflycake.jpg"> </div> -->
 </div> <!-- slider-nav.// -->
 </article> <!-- gallery-wrap .end// -->
 		</aside>
