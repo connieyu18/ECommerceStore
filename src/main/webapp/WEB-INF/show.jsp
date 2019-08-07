@@ -69,6 +69,27 @@
 		</h1>
 		<br>
 
+
+<%-- 	
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-5 border-right">
+<article class="gallery-wrap"> 
+<div class="img-big-wrap">
+  <div> <a href="#"> <img  class="img-fluid" src="<c:out value="${product.pictureUrl}"/>"/></a></div>
+</div> <!-- slider-product.// -->
+<div class="img-small-wrap">
+<!--   <div class="item-gallery"> <img  src="../img/redrose.jpg"> </div>
+  <div class="item-gallery"> <img  src="../img/pinkrose.jpg"> </div>
+  <div class="item-gallery"> <img  src="../img/coffeecake.jpg"> </div>
+  <div class="item-gallery"> <img  src="../img/butterflycake.jpg"> </div> -->
+</div> <!-- slider-nav.// -->
+</article> <!-- gallery-wrap .end// -->
+		</aside>
+		<aside class="col-sm-7">
+<article class="card-body p-5">
+	<h3 class="title mb-3"><c:out value="${product.name}"/></h3> --%>
+
 		<h1 style="text-align: center; color: gray">Product Details</h1>
 	</div>
 </div>
