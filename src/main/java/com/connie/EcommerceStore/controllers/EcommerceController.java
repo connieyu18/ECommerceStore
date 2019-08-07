@@ -38,13 +38,13 @@ public class EcommerceController {
 	private final ProductService productService;
 	private final EventService eventService;
 	private final UserService userService;
-	private final UsersController usersConstroller;
+	private final UsersController usersController;
 
-	public EcommerceController(UsersController usersConstroller, ProductService productService, EventService eventService, UserService userService) {
+	public EcommerceController(UsersController usersController, ProductService productService, EventService eventService, UserService userService) {
 		this.productService = productService;
 		this.eventService = eventService;
 		this.userService = userService;
-		this.usersConstroller = usersConstroller;
+		this.usersController = usersController;
 	}
 	
 
@@ -82,7 +82,7 @@ public class EcommerceController {
 
 	@RequestMapping(value = { "/productList" })
 	public String home(Principal principal, Model model) {
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 		Iterable<Product> products = productService.getAllProducts();
 		System.out.println("products\n" + ((ArrayList<Product>) products).get(0).getName());
 		model.addAttribute("products", products);
@@ -96,7 +96,7 @@ public class EcommerceController {
 		Product product2 = productService.findProduct(id);
 		System.out.println(product2);
 		model.addAttribute("productsInCart", product2);
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
@@ -129,7 +129,7 @@ public class EcommerceController {
 		System.out.println(product2);
 		
 		model.addAttribute("productsInCart", product2);
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
@@ -179,7 +179,7 @@ public class EcommerceController {
 //		
 	@RequestMapping("/admin/products/new")
 	public String displayAddProductPage(@Valid @ModelAttribute("user") User user, Principal principal, Model model) {
-		usersConstroller.addUserToModel(principal, model);
+		usersController.addUserToModel(principal, model);
 		return "addProducts.jsp";
 	}
 
@@ -192,7 +192,7 @@ public class EcommerceController {
 
 	@RequestMapping("/cart")
 	public String Cart(Principal principal, Model model) {
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 		System.out.println("bbb" + u.getProducts());
 		return "cart.jsp";
 	}
@@ -200,7 +200,7 @@ public class EcommerceController {
 	@RequestMapping("/show/{id}")
 	public String ShowProduct(@PathVariable Long id, @ModelAttribute("searchProduct") String name, Principal principal,
 			Model model) {
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 		Product product2 = productService.findProduct(id);
 		model.addAttribute("product", product2);
 		return "show.jsp";
@@ -241,14 +241,14 @@ public class EcommerceController {
 	public String ShowCat(Principal principal, @RequestParam("email") String email,
 			@ModelAttribute("showProductCat") Product productcat, Model model) {
 		
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 
 		return "showCategory.jsp";
 	}
 
 	@RequestMapping("/newEvent")
 	public String newEvent(Principal principal, @ModelAttribute("event") Event event, Model model) {
-		User u = usersConstroller.addUserToModel(principal, model);
+		User u = usersController.addUserToModel(principal, model);
 		List<Event> event2 = u.getEvents();
 		model.addAttribute("allEvents", event2);
 		model.addAttribute("products", productService.getAllProducts());
@@ -262,7 +262,7 @@ public class EcommerceController {
 			System.out.println("ddd");
 			return "form.jsp";
 		} else {
-			User u = usersConstroller.addUserToModel(principal, model);
+			User u = usersController.addUserToModel(principal, model);
 			List<Event> event2 = u.getEvents();
 			event.setUser(u);
 			event.setProduct(productService.findProduct(id));
@@ -294,7 +294,7 @@ public class EcommerceController {
 //	public String ShowCat(HttpSession session, @RequestParam("email") String email,
 //			@ModelAttribute("showProductCat") Product productcat, Model model) {
 //		
-//		User u = usersConstroller.addUserToModel(session, model);
+//		User u = usersController.addUserToModel(session, model);
 //		return "showCategory.jsp";
 //	}
 
