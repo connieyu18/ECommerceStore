@@ -26,21 +26,33 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @Size(min=4, message="First Name must be at least 4 characters")
     private String firstName; 
+    
     @Size(min=2, message="Last Name must be at least 2 characters")
     private String lastName; 
-    @Size(min=4, message="Email must be at least 4 characters")
-    @Email(message="Email must be valid")
-    private String email; 
+    
+   
+    @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")
+	private String email;
+
     @Size(min=8, message="Password must be at least 8 characters")
     private String password;
+   
     @Transient
     private String passwordConfirmation;
+    
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt; 
 	
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
     
     @PrePersist
     protected void onCreate(){
@@ -75,13 +87,17 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "product_id")
        )
-
 	private List<Product> products;
 	
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
     private List<Event> events; 
     
-
+    public List<Role> getRoles() {
+        return roles;
+    }
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
      
 
 	public Long getId() {
