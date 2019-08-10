@@ -35,14 +35,28 @@ public class Product {
 	private Double price;
 	@Size(min = 3)
 	private String pictureUrl;
+	
+	@Column
+	private int avgRatings; 
 
 	@Column(updatable = false)
 	private Date createdAt;
 	private Date updatedAt;
+	
+	
+
 
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+	}
+
+	public int getAvgRatings() {
+		return avgRatings;
+	}
+
+	public void setAvgRatings(int avgRatings) {
+		this.avgRatings = avgRatings;
 	}
 
 	@PreUpdate
@@ -52,6 +66,10 @@ public class Product {
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private List<Event> events;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+ 
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "userProducts", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -77,17 +95,25 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String name, String description, Double price, String pictureUrl, String category, Date createdAt,
-			Date updatedAt) {
+
+	
+	
+	public Product(Long id, @Size(min = 1) String name, @Size(min = 3) String description, String category,
+			Double price, @Size(min = 3) String pictureUrl, int avgRatings, Date createdAt, Date updatedAt,
+			List<Event> events, List<Review> reviews, List<User> users) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.price = price;
 		this.category = category;
+		this.price = price;
 		this.pictureUrl = pictureUrl;
+		this.avgRatings = avgRatings;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.events = events;
+		this.reviews = reviews;
+		this.users = users;
 	}
 
 	public String getCategory() {
@@ -169,30 +195,41 @@ public class Product {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
+	
+	public List<Review> getReviews() {
+        return reviews;
+    }
+ 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+ 
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((id == null) ? 0 : id.hashCode());
+//		return result;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Product other = (Product) obj;
+//		if (id == null) {
+//			if (other.id != null)
+//				return false;
+//		} else if (!id.equals(other.id))
+//			return false;
+//		return true;
+//	}
 
 }

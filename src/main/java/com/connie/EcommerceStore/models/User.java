@@ -54,6 +54,10 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
     
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Review> reviews;
+
+    
     @PrePersist
     protected void onCreate(){
         this.createdAt = new Date();
@@ -161,5 +165,10 @@ public class User {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
-
+    public List<Review> getReviews() {
+		return reviews;
+	}
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 }

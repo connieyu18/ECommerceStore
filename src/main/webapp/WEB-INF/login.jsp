@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<form:label path="email" class="col-sm-2 col-form-label">Email</form:label>
+					<form:label path="email" class="col-sm-2 col-form-label">Email:</form:label>
 					<form:errors path="email" />
 					<div class="col-sm-3">
 						<form:input path="email" class="form-control" />

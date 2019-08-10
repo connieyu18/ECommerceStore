@@ -1,9 +1,7 @@
 package com.connie.EcommerceStore.controllers;
 
 import java.security.Principal;
-
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,23 +13,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.connie.EcommerceStore.models.Event;
 import com.connie.EcommerceStore.models.Product;
+import com.connie.EcommerceStore.models.Review;
 import com.connie.EcommerceStore.models.User;
-import com.connie.EcommerceStore.services.ClientOrderService;
 import com.connie.EcommerceStore.services.EventService;
-import com.connie.EcommerceStore.services.OrderProductService;
 import com.connie.EcommerceStore.services.ProductService;
+import com.connie.EcommerceStore.services.ReviewService;
 import com.connie.EcommerceStore.services.UserService;
-import com.connie.EcommerceStore.validator.UserValidator;
-
-import aj.org.objectweb.asm.Type;
 
 @Controller
 public class EcommerceController {
@@ -39,11 +32,14 @@ public class EcommerceController {
 	private final EventService eventService;
 	private final UserService userService;
 	private final UsersController usersController;
+	private final ReviewService reviewService;
 
-	public EcommerceController(UsersController usersController, ProductService productService, EventService eventService, UserService userService) {
+
+	public EcommerceController(UsersController usersController, ProductService productService, EventService eventService, UserService userService,ReviewService reviewService) {
 		this.productService = productService;
 		this.eventService = eventService;
 		this.userService = userService;
+		this.reviewService = reviewService;
 		this.usersController = usersController;
 	}
 	
@@ -84,8 +80,11 @@ public class EcommerceController {
 	public String home(Principal principal, Model model) {
 		User u = usersController.addUserToModel(principal, model);
 		Iterable<Product> products = productService.getAllProducts();
-		System.out.println("products\n" + ((ArrayList<Product>) products).get(0).getName());
+//		System.out.println("products\n" + ((ArrayList<Product>) products).get(0).getName());
 		model.addAttribute("products", products);
+//		int reviews1=reviewService.getAvgRatingByProduct(id); 
+//		System.out.println("in productListy11" + reviews1);
+//		model.addAttribute("products",reviews1);
 		return "productList.jsp";
 	}
 
@@ -197,15 +196,29 @@ public class EcommerceController {
 		return "cart.jsp";
 	}
 
+
 	@RequestMapping("/show/{id}")
-	public String ShowProduct(@PathVariable Long id, @ModelAttribute("searchProduct") String name, Principal principal,
-			Model model) {
-		User u = usersController.addUserToModel(principal, model);
+	public String ShowProduct(@PathVariable Long id, Principal principal, @ModelAttribute("review") Review review, @ModelAttribute("searchProduct") String name, Model model) {
+//		User u = usersController.addUserToModel(principal, model);
 		Product product2 = productService.findProduct(id);
+		
 		model.addAttribute("product", product2);
+		List review2 = product2.getReviews();
+		model.addAttribute("product", product2);
+		model.addAttribute("reviews", review2);
+		//show avgrating
+		int avg=reviewService.getAvgRatingByProduct(id); 
+		model.addAttribute("avgRating",avg);
+		
+		
+//		Review newReview = new Review();
+//		newReview.setProduct(product2);
+//		newReview.setRating(5);
+//		model.addAttribute("review",newReview);
 		return "show.jsp";
 	}
-
+	
+	
 	@RequestMapping("/removeEvent/{id}")
 	public String removeEvent(@PathVariable("id") Long id) {
 		eventService.deleteEvent(id);
@@ -254,6 +267,8 @@ public class EcommerceController {
 		model.addAttribute("products", productService.getAllProducts());
 		return "form.jsp";
 	}
+	
+
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 	public String addEvent(Principal principal, @Valid @ModelAttribute("event") Event event,
@@ -270,6 +285,38 @@ public class EcommerceController {
 			return "redirect:/newEvent";
 		}
 	}
+	
+	@RequestMapping(value = "/createReview", method = RequestMethod.POST)
+	public String addRating(Principal principal, @Valid @ModelAttribute("review") Review review, @RequestParam("rating") int rating, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			System.out.println("in add rating");
+			return "show.jsp";
+		} else {
+			System.out.println("in create rate" + review);
+//			System.out.println("in create rate: product id:" + id);
+			User u = usersController.addUserToModel(principal, model);
+			List<Review> review2 = u.getReviews();
+			review.setUser(u);
+			Product product1= review.getProduct();
+			System.out.println("in creating review:" + product1.getId());
+//			Product product1= productService.findProduct(id); 
+//			review.setProduct(productService.findProduct(id));
+			Review review1 = reviewService.save(review);
+//			return "redirect:/productList"; 
+			return "redirect:/show/" + product1.getId();
+		}
+	}
+	
+	@RequestMapping(value = "/deleteReview/{id}")
+	public String removeReview(@PathVariable("id") Long id ) {
+//		System.out.println("in delete route: product id:" + id2);
+//		Product product1= productService.findProduct(id2); 
+		reviewService.deleteReview(id);
+		return  "redirect:/productList";
+	}
+}
+//		return  "redirect:/show/" + product1.getId();
+	
 
 //		@RequestMapping("/checkout/{id}")
 //		public String Checkout(HttpSession session, Model model) {
@@ -323,4 +370,4 @@ public class EcommerceController {
 ////			return "redirect:/show/{id}"; //or redirect /login
 //		}
 
-}
+

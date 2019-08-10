@@ -44,6 +44,8 @@
 	crossorigin="anonymous">
 </script>
 
+<link href="https://fonts.googleapis.com/css?family=Montserrat"
+	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/productList.css">
 
 </head>
@@ -240,15 +242,26 @@
 								<c:out value="${i.description}" />
 							</p>
 							<div class="rating-wrap">
-								<ul class="rating-stars">
-									<li style="width: 80%" class="stars-active"><i
-										class="fa fa-star "></i><i class="fa fa-star"></i><i
-										class="fa fa-star"></i><i class="fa fa-star"></i><i
-										class="fa fa-star"></i></li>
-									<li><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-										class="fa fa-star"></i><i class="fa fa-star"></i><i
-										class="fa fa-star"></i></li>
-								</ul>
+								  <p>Average Star Rating:
+				                    <c:set var = "Avgstars" value = "${i.avgRatings}"  />
+				                    	<c:choose>	
+										<c:when test = "${Avgstars == 1}"> 
+				                            <i class="fa fa-star"></i>
+				                       </c:when>
+				                       <c:when test = "${Avgstars == 2}"> 
+				                            <i class="fa fa-star"></i><i class="fa fa-star"></i>
+				                       </c:when>
+				                       <c:when test = "${Avgstars ==3}"> 
+				                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+				                       </c:when>
+				                       <c:when test = "${Avgstars==4}"> 
+				                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+				                       </c:when>
+				                       <c:when test = "${Avgstars==5}"> 
+				                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+				                       </c:when>
+									</c:choose>  
+				                    </p>
 
 							</div>
 							<!-- rating-wrap.// -->
