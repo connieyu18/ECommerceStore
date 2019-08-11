@@ -13,7 +13,7 @@ import com.connie.EcommerceStore.models.Review;
 public interface ReviewRepository extends CrudRepository <Review, Long>  {
 
     @Query(value="SELECT ROUND(AVG(rating),0) FROM reviews WHERE product_id=?1 ", nativeQuery=true)
-    int getAvgRatingWhereProductId(Long id);
+    Integer getAvgRatingWhereProductId(Long id);
     
     
     @Query(value="SELECT product_id, ROUND(AVG(rating),0) AS avgStarRatings FROM reviews GROUP BY product_id", nativeQuery=true)

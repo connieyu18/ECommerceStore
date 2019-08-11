@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link
 	href="https://fonts.googleapis.com/css?family=Parisienne&display=swap"
@@ -73,8 +74,10 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" href="/newEvent">Add
 							Event</a></li>
-					<li class="nav-item"><a class="nav-link" href="/admin">Admin</a>
-					</li>
+					<c:if test="${currentUser.isAdmin()}">		
+						<li class="nav-item"><a class="nav-link" href="/admin">Admin</a>
+						</li>
+					</c:if>
 				</ul>
 
 				<div class="form-inline my-2 my-lg-0">
@@ -242,27 +245,18 @@
 								<c:out value="${i.description}" />
 							</p>
 							<div class="rating-wrap">
-								  <p>Average Star Rating:
-				                    <c:set var = "Avgstars" value = "${i.avgRatings}"  />
-				                    	<c:choose>	
-										<c:when test = "${Avgstars == 1}"> 
-				                            <i class="fa fa-star"></i>
-				                       </c:when>
-				                       <c:when test = "${Avgstars == 2}"> 
-				                            <i class="fa fa-star"></i><i class="fa fa-star"></i>
-				                       </c:when>
-				                       <c:when test = "${Avgstars ==3}"> 
-				                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-				                       </c:when>
-				                       <c:when test = "${Avgstars==4}"> 
-				                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-				                       </c:when>
-				                       <c:when test = "${Avgstars==5}"> 
-				                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-				                       </c:when>
-									</c:choose>  
-				                    </p>
-
+							<c:choose>
+							    <c:when test="${i.avgRatings <=0}">
+							        <i class="fa fa-star">No rating yet!</i>
+							    </c:when>
+							    <c:otherwise>
+							        <p>Average Star Rating:
+					                    <c:forEach var = "i" begin = "1" end = "${i.avgRatings}">
+					                       <i class="fa fa-star"></i>
+					                    </c:forEach>
+			                  		</p>
+							    </c:otherwise>
+							</c:choose>
 							</div>
 							<!-- rating-wrap.// -->
 						</figcaption>

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -36,7 +38,7 @@ public class Product {
 	@Size(min = 3)
 	private String pictureUrl;
 	
-	@Column
+	@Value("${avgRatings:0}")
 	private int avgRatings; 
 
 	@Column(updatable = false)
@@ -183,6 +185,7 @@ public class Product {
 	public List<User> getUsers() {
 		return users;
 	}
+	
 
 	public void setUsers(List<User> users) {
 		this.users = users;
