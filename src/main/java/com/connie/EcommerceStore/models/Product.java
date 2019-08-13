@@ -38,27 +38,15 @@ public class Product {
 	@Size(min = 3)
 	private String pictureUrl;
 	
-	@Value("${avgRatings:0}")
-	private int avgRatings; 
-
 	@Column(updatable = false)
 	private Date createdAt;
 	private Date updatedAt;
-	
 	
 
 
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
-	}
-
-	public int getAvgRatings() {
-		return avgRatings;
-	}
-
-	public void setAvgRatings(int avgRatings) {
-		this.avgRatings = avgRatings;
 	}
 
 	@PreUpdate
@@ -110,7 +98,6 @@ public class Product {
 		this.category = category;
 		this.price = price;
 		this.pictureUrl = pictureUrl;
-		this.avgRatings = avgRatings;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.events = events;
@@ -206,6 +193,15 @@ public class Product {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+    
+	public int getAverage() {
+		int sum = 0;
+		for(Review r: this.reviews) {
+			sum += r.getRating();
+		}	
+		System.out.printf("sum of rating %d", sum);
+		return (int)(sum/this.reviews.size());
+	}
  
 
 
