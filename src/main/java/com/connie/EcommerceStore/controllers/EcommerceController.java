@@ -205,7 +205,7 @@ public class EcommerceController {
 		List review2 = product2.getReviews();
 		model.addAttribute("reviews", review2);
 		//show avgrating
-		int avg=reviewService.getAvgRatingByProduct(id); 
+		Integer avg=reviewService.getAvgRatingByProduct(id); 
 		model.addAttribute("avgRating",avg);
 		
 		

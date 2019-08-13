@@ -171,4 +171,8 @@ public class User {
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
+	public boolean isAdmin() {
+		System.out.printf("this.roles.get(0).getName().equals : %S", this.roles.get(0).getName());
+		return (this.roles.get(0).getName().equals("ROLE_ADMIN"));
+	}
 }

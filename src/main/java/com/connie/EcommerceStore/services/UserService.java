@@ -59,12 +59,12 @@ public class UserService {
 //    ------------------------------------------------------------------
     // 1
     public void registerUser(User user) {
-    	createUserWithRole(user, "USER");
+    	createUserWithRole(user, "ROLE_USER");
     }
      
      // 2 
     public void registerAdmin(User user) {
-    	createUserWithRole(user, "ADMIN");
+    	createUserWithRole(user, "ROLE_ADMIN");
     }    
     
     // register user, add role and hash their password

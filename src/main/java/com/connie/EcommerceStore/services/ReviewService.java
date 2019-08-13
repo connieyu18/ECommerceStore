@@ -23,8 +23,8 @@ public class ReviewService {
 		reviewRepository.deleteById(id); 
 		
 	}
-	public int getAvgRatingByProduct(Long id) {
-		return  reviewRepository.getAvgRatingWhereProductId(id); 
+	public Integer getAvgRatingByProduct(Long id) {
+		return reviewRepository.getAvgRatingWhereProductId(id); 
 		
 	}
 	public List<Review> getAllRating() {

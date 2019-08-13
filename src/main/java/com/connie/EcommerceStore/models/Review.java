@@ -14,13 +14,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-
-
-
 @Entity
 @Table(name="reviews")
 public class Review {
-	 @Id
+	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 	
 	    private Long id;
@@ -29,8 +26,6 @@ public class Review {
 	    
 	    private String comment; 
 	   
-	    
-	
 	    
 	    @Column(updatable=false)
 	    private Date createdAt;
