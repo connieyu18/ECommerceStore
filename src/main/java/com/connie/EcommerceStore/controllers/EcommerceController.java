@@ -201,10 +201,8 @@ public class EcommerceController {
 	public String ShowProduct(@PathVariable Long id, Principal principal, @ModelAttribute("review") Review review, @ModelAttribute("searchProduct") String name, Model model) {
 //		User u = usersController.addUserToModel(principal, model);
 		Product product2 = productService.findProduct(id);
-		
 		model.addAttribute("product", product2);
 		List review2 = product2.getReviews();
-		model.addAttribute("product", product2);
 		model.addAttribute("reviews", review2);
 		//show avgrating
 		int avg=reviewService.getAvgRatingByProduct(id); 

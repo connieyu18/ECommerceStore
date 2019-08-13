@@ -272,7 +272,7 @@
 								href="/show/${i.id}" class="btn btn-sm  float-right"
 								style="background-color: #E5CFCF">Details</a>
 							<div class="price-wrap h5">
-								<span class="price-new">$<c:out value="${i.price}" /></span>
+								<span class="price-new"><fmt:formatNumber value="${i.price}" type="currency" /></p></span>
 							</div>
 							<!-- price-wrap.// -->
 						</div>
