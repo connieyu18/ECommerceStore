@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -27,7 +28,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Products</title>
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -50,7 +51,7 @@
 <link rel="stylesheet" type="text/css" href="css/productList.css">
 
 </head>
-<body style="padding: 2%">
+<body>
 	<div class="wrapper">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<img class="img" style="width: 120px; height: 80px"
@@ -81,14 +82,16 @@
 				</ul>
 
 				<div class="form-inline my-2 my-lg-0">
-					<form class="float-right" method="POST" action="/logout">
+					<form method="POST"  style="color:purple" action="/logout">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
-						<button type="submit" class="nav-link btn btn-danger"
+						<button type="submit" class="nav-link btn"
 							style="color: purple">Logout!</button>
 					</form>
+					
 					<form action="/search" method="post">
-
+					<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
 						<%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
  --%>
 						<input name="name" class="form-control mr-sm-2" type="search"
@@ -123,7 +126,8 @@
 					</header>
 					<div class="card-body">
 						<form action="/showCategoryProduct" method="post">
-
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
 							<%-- 			<form:form method="POST" action="/showCategoryProduct" modelAttribute="showProductCat">
  --%>
 
@@ -168,7 +172,7 @@
 							<input type="submit"
 								class="btn btn-outline-info btn-sm pull-right"
 								style="background-color: #F9E7E7; color: black; border: none; font-size: 15px"
-								value="Choose a Category"></>
+								value="Choose a Category"></><br>
 							<%--    	</form:form> --%>
 						</form>
 					</div>
@@ -176,7 +180,7 @@
 				</article>
 				<!-- card-group-item.// -->
 
-
+<!-- 
 				<article class="card-group-item">
 					<header class="card-header">
 						<h6 class="title">Choose type</h6>
@@ -195,14 +199,14 @@
 								other option </span>
 						</label>
 					</div>
-					<!-- card-body.// -->
-				</article>
+					card-body.//
+				</article> -->
 				<!-- card-group-item.// -->
 			</div>
 			<!-- card.// -->
 			<div class="card">
 				<article class="card-group-item">
-					<header class="card-header">
+				<!-- 	<header class="card-header">
 						<h6 class="title">Range input</h6>
 					</header>
 					<div class="card-body">
@@ -218,28 +222,28 @@
 							</div>
 						</div>
 					</div>
-					<!-- card-body.// -->
-				</article>
+					card-body.//
+				</article> -->
 				<!-- card-group-item.// -->
 			</div>
 		</div>
 
-		<div class="col">
-
+<div class="rightBox">
+	<div class="content"> 
+		<div class="row">
 			<c:forEach var="i" items="${products}">
-
-				<div class="col-md-3">
+				<div class="col-md-4">
 
 					<figure class="card card-product">
 						<div class="img-wrap">
 							<div class="img-container">
-								<img class="img-fluid" style="height: 200px; float: center"
+								<img class="img-fluid" style="height: 200px; float: center; text-align:center"
 									src="<c:out value="${i.pictureUrl}"/>" />
 							</div>
 						</div>
 						<figcaption class="info-wrap">
 							<h4 class="title">
-								<c:out value="${i.name}" />
+								<a class="product-title" style="text-decoration: none" href="/show/${i.id}"> <c:out value="${i.name}" /></a>
 							</h4>
 							<p class="desc">
 								<c:out value="${i.description}" />
@@ -247,7 +251,7 @@
 							<div class="rating-wrap">
 								<c:choose>
 								    <c:when test="${i.reviews.size()<= 0}">
-								        <i class="fa fa-star">No rating yet!</i>
+								         <p>No rating yet! </p>
 								    </c:when>
 								    <c:otherwise>
 								        <p>Average Star Rating:
@@ -283,7 +287,7 @@
 								href="/show/${i.id}" class="btn btn-sm  float-right"
 								style="background-color: #E5CFCF">Details</a>
 							<div class="price-wrap h5">
-								<span class="price-new">$<c:out value="${i.price}" /></span>
+								<span class="price-new"><fmt:formatNumber value="${i.price}" type="currency"/></span>
 							</div>
 							<!-- price-wrap.// -->
 						</div>
@@ -295,8 +299,8 @@
 
 			</c:forEach>
 		</div>
-
-
+	
+	</div>
 	</div>
 
 	</div>

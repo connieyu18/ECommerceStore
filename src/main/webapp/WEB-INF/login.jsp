@@ -4,6 +4,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Login Page</title>
 <link
 	href="https://fonts.googleapis.com/css?family=Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap"
 	rel="stylesheet">
@@ -16,16 +24,19 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+	<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous">
+</script>
+
+	
 <link
 	href="https://fonts.googleapis.com/css?family=Parisienne&display=swap"
 	rel="stylesheet">
-
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta charset="UTF-8">
-<title>Login Page</title>
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
@@ -40,6 +51,8 @@
         }); 
         });
     </script>
+    
+
 
 </head>
 <body>
@@ -110,7 +123,7 @@
 				data-target="#myModal" style="float: right">Login</button>
 
 			<!-- Modal -->
-			<div class="modal fade" id="myModal" role="dialog">
+<%-- 			<div class="modal fade" id="myModal" role="dialog">
 				<div class="modal-dialog">
 
 					<!-- Modal content-->
@@ -124,7 +137,7 @@
 							<p class="alert-danger input-group">
 								<c:out value="${logoutMessage}" />
 								<c:out value="${loginError}" />
-							</p>
+							</p> --%>
 							<form method="post" action="/login">
 								<div class="form-group row">
 									<label class="col-sm-3 col-form-label" for="email">Email:</label>
@@ -142,10 +155,10 @@
 									value="${_csrf.token}" /> <input id="loginbutton"
 									type="submit" value="Login!" />
 							</form>
-						</div>
+<!-- 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </body>

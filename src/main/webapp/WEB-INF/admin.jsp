@@ -157,7 +157,7 @@
 						<td><c:out value="${i.getDescription() }" /></td>
 						<td><c:out value="${i.getCategory() }" /></td>
 						
-						<td>$<c:out value="${i.getPrice()}" />
+						<td><fmt:formatNumber value="${i.price}" type="currency"/>
 						</td>
 						<td><img class="img-fluid"
 							style="width: 100px; height: 100px; float: center"

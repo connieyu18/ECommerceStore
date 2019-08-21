@@ -88,7 +88,10 @@
 { color: #ffca08 ;  } /* Set yellow color when star hover */
 
 	
-
+.quantity{
+	position:relative; 
+	display:inline-block;
+}
 
 
 

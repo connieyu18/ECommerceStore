@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,15 +89,22 @@ public class ProductService {
 			return null; 
 		}
 	}
-	public  Product findProductByCategory(String category) {
-		Optional<Product> optionalProduct= productRepository.findByCategory(category); 
-		if (optionalProduct.isPresent()) {
-			return optionalProduct.get(); 
-		}
-		else {
-			return null; 
-		}
+	
+	public List<Product> findProductByCategory(@Param("category") String category) {
+		return productRepository.findByCategory(category); 
 	}
+	
+	
+	
+//	public  Product findProductByCategory(String category) {
+//		Optional<Product> optionalProduct= productRepository.findByCategory(category); 
+//		if (optionalProduct.isPresent()) {
+//			return optionalProduct.get(); 
+//		}
+//		else {
+//			return null; 
+//		}
+//	}
 	
     public void deleteProduct(long id) {
     	productRepository.deleteById(id);

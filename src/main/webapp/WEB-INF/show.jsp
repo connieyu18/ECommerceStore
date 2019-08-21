@@ -4,10 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Product Details</title>
 
 	<link rel="stylesheet" type="text/css" href="css/show.css">
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+	
 	
 	<script src="https://use.fontawesome.com/c560c025cf.js"></script>
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -42,9 +44,9 @@ body{
  	font-weight: bold;
  }
 	#card-product-detail{
-			width:70%; 
-			text-align:center;
-			 margin:0px auto; 
+		width:70%; 
+		text-align:center;
+		 margin:0px auto; 
 		}
 	
 	.review-container{
@@ -57,14 +59,14 @@ body{
 		
 	}
 	.post-container{
-    border:1px solid black;
-    list-style: none;
-    margin: 7px;
-    padding:7px; 
-    border:none; 
-    height:80px;
-    margin: 10px 30px;
-    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+	    border:1px solid black;
+	    list-style: none;
+	    margin: 7px;
+	    padding:7px; 
+	    border:none; 
+	    height:80px;
+	    margin: 10px 30px;
+	    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
     
 	}
 	#review-dashboard{
@@ -77,11 +79,11 @@ body{
 	.starrating > input {display: none;}  /* Remove radio buttons */
 	
 	.starrating > label:before { 
-	  content: "\f005"; /* Star */
-	  margin: 2px;
-	  font-size: 2em;
-	  font-family: FontAwesome;
-	  display: inline-block; 
+		  content: "\f005"; /* Star */
+		  margin: 2px;
+		  font-size: 2em;
+		  font-family: FontAwesome;
+		  display: inline-block; 
 	}
 	
 	.starrating > label
@@ -94,13 +96,7 @@ body{
 	
 	.starrating > input:hover ~ label
 	{ color:tan ;  } /* Set yellow color when star hover */
-
-	
 </style>
-
-
-
-
 </head>
 <body>
 
@@ -129,18 +125,27 @@ body{
 						<li class="nav-item"><a class="nav-link" href="/newEvent">Add
 								Event</a></li>
 					</ul>
-					<div class="form-inline my-2 my-lg-0">
-						<form class="float-right" method="POST" action="/logout">
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
-							<button type="submit" class="nav-link" style="color: purple">Logout!</button>
-						</form>
-						<input class="form-control mr-sm-2" type="search"
+				<div style="float:right" class="form-inline my-2 my-lg-0">
+					<form method="POST"  style="color:purple" action="/logout">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<button type="submit" class="nav-link btn"
+							style="color: purple">Logout!</button>
+					</form>
+					
+					<form action="/search" method="post">
+					<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
+ --%>
+						<input name="name" class="form-control mr-sm-2" type="search"
 							style="background-color: #F9E7E7; color: white; border-color: white;"
-							placeholder="Search">
+							placeholder="Search" />
 						<button class="btn btn-outline-success my-2 my-sm-0"
 							style="border-color: pink; color: black" type="submit">Search</button>
-					</div>
+					</form>
+
+				</div>
 				</div>
 			</nav>
 			</div>
@@ -231,7 +236,7 @@ body{
 
 					<p class="price-detail-wrap">
 						<span class="price h3 text-warning"> <span class="currency">US
-								$</span><span class="num"><c:out value="${product.price}" /></span>
+								</span><span class="num"><fmt:formatNumber value="${product.price}" type="currency"/></span>
 						</span> <span>/each</span>
 					</p>
 					<!-- price-detail-wrap .// -->
@@ -263,15 +268,18 @@ body{
 					<div class="row">
 						<div class="col-sm-5">
 							<dl class="param param-inline">
-								<dt>Quantity:
-								<dd>
-									<select class="form-control form-control-sm"
+								<dt id="quantity">Quantity:</dt>
+								<dt id="quantity">
+						<!-- 			<select class="form-control form-control-sm"
+										style="width: 70px;"> -->
+										<select class=" form-control-sm"
 										style="width: 70px;">
+										
 										<option>1</option>
 										<option>2</option>
 										<option>3</option>
 									</select>
-								</dd></dt>
+								</dt>
 							</dl>
 							<!-- item-property .// -->
 						</div>

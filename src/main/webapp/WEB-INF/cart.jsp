@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -9,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Cart</title>
 
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -64,26 +66,35 @@
 						<li class="nav-item"><a class="nav-link" href="/newEvent">Add
 								Event</a></li>
 					</ul>
-					<div class="form-inline my-2 my-lg-0">
-						<form class="float-right" method="POST" action="/logout">
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
-							<button type="submit" class="nav-link" style="color: purple">Logout!</button>
-						</form>
-						<input class="form-control mr-sm-2" type="search"
+				<div class="form-inline my-2 my-lg-0">
+					<form method="POST"  style="color:purple" action="/logout">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<button type="submit" class="nav-link btn"
+							style="color: purple;background:none">Logout!</button>
+					</form>
+					
+					<form action="/search" method="post">
+					<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
+ --%>
+						<input name="name" class="form-control mr-sm-2" type="search"
 							style="background-color: #F9E7E7; color: white; border-color: white;"
-							placeholder="Search">
+							placeholder="Search" />
 						<button class="btn btn-outline-success my-2 my-sm-0"
 							style="border-color: pink; color: black" type="submit">Search</button>
-					</div>
+					</form>
+
+				</div>
 				</div>
 			</nav>
 			<div class="title">
 
 				<h1 style="font-family: 'Petit Formal Script', cursive">
 					Welcome,
-					<c:out value="${user.firstName}" />
-					<c:out value="${user.lastName}" />
+					<c:out value="${currentUser.firstName}" />
+					<c:out value="${currentUser.lastName}" />
 				</h1>
 				<h1 style="text-align: center; margin: 30px">Your Cart</h1>
 			</div>
@@ -129,8 +140,7 @@
 										<div
 											class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
 											<p class="product-name">
-												<strong><c:out value="${i.name}" /></strong>
-											</p>
+												<strong><a class="product-title" style="text-decoration: none; color:black" href="/show/${i.id}"> <c:out value="${i.name}" /></a></strong>																					</p>
 											<p>
 												<small><c:out value="${i.description}" /></small>
 											</p>
@@ -140,19 +150,16 @@
 											<div class="col-3 col-sm-3 col-md-6 text-vmd-right"
 												style="padding-top: 5px">
 												<p>
-													<strong><c:out value="${i.price}" /> <span
+													<strong><fmt:formatNumber value="${i.price}" type="currency"/> <span
 														class="text-muted">x</span></strong>
 												</p>
 											</div>
 											<div class="col-4 col-sm-4 col-md-4">
 												<div class="quantity">
-													<a href="/cart/<c:out value="${i.id}"/>">
-													<input type="button" value="+" class="plus"></a> 
-													<input type="number" step="1" max="99" min="1"
-														value="<c:out value ="${product.getValue()}"/>"
-														title="Qty" class="qty" size="6"> <a
-														href="/cart/remove/<c:out value="${i.id}"/>"><input
-														type="button" value="-" class="minus"></a>
+													<a href="/cart/<c:out value="${i.id}"/>"> <input type="button" value="+" class="plus"></a> 
+													<input type="number" step="1" max="99" min="1"value="<c:out value ="${product.getValue()}"/>" title="Qty" class="qty" size="6"> 
+														<a href="/remove/<c:out value="${i.id}"/>">
+														<input type="button" value="-" class="minus"></a>
 												</div>
 											</div>
 											<div class="col-2 col-sm-2 col-md-2 text-right">
@@ -170,7 +177,7 @@
 							<div class="card-footer">
 								<div class="pull-right" style="margin: 5px">
 									<h4>
-										Subtotal: $<b>${subtotal}</b>
+										<b>Subtotal: <fmt:formatNumber value="${subtotal}" type="currency"/></b>
 									</h4>
 								</div>
 							</div>
@@ -190,7 +197,7 @@
 											<c:set var="i" value="${product.getKey()}"></c:set>
 
 											<div class="item">
-												<span class="price">$<c:out value="${i.price}" /></span>
+												<span class="price"><fmt:formatNumber value="${i.price}" type="currency"/></span>
 												<p class="item-name">
 													<c:out value="${i.name}" />
 												</p>
@@ -203,11 +210,11 @@
 											Delivery<span class="price">$${delivery}</span>
 										</div>
 										<div class="total">
-											Tax<span class="price">$${tax}</span>
+											Tax<span class="price"><fmt:formatNumber value="${tax}" type="currency"/></span>
 										</div>
 
 										<div class="total">
-											Total<span class="price">$${total}</span>
+											Total<span class="price"><fmt:formatNumber value="${total}" type="currency"/></span>
 										</div>
 									</div>
 
