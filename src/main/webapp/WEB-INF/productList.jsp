@@ -88,9 +88,7 @@
 							style="color: purple">Logout!</button>
 					</form>
 					<form action="/search" method="post">
-
-						<%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
- --%>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input name="name" class="form-control mr-sm-2" type="search"
 							style="background-color: #F9E7E7; color: white; border-color: white;"
 							placeholder="Search" />
@@ -123,10 +121,7 @@
 					</header>
 					<div class="card-body">
 						<form action="/showCategoryProduct" method="post">
-
-							<%-- 			<form:form method="POST" action="/showCategoryProduct" modelAttribute="showProductCat">
- --%>
-
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<label class="form-check"> <input
 								class="form-check-input" type="checkbox" name="category"
 								value="flowers"> <span class="form-check-label">
