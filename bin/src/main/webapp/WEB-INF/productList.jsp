@@ -122,7 +122,7 @@
 		        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="/productList">Productsssssssssssssssssssssssssss List</a>
+		        <a class="nav-link" href="/productList">Products List</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="/cart">Cart</a>
