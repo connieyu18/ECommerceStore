@@ -158,7 +158,7 @@
 												<div class="quantity">
 													<a href="/cart/<c:out value="${i.id}"/>"> <input type="button" value="+" class="plus"></a> 
 													<input type="number" step="1" max="99" min="1"value="<c:out value ="${product.getValue()}"/>" title="Qty" class="qty" size="6"> 
-														<a href="/remove/<c:out value="${i.id}"/>">
+														<a href="/cart/remove/<c:out value="${i.id}"/>">
 														<input type="button" value="-" class="minus"></a>
 												</div>
 											</div>
