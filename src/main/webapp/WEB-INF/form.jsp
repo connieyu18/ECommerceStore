@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>   
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cormorant+Infant|Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap" rel="stylesheet">
-   <link rel="stylesheet" type="text/css" href="form/style.css">
+   <link rel="stylesheet" type="text/css" href="css/form.css">
 
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
 </script>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Login Page</title>
+    <title>Event</title>
 </head>
 <body>
 
@@ -51,28 +51,34 @@
 		      </li>
 		    </ul>
 		    
-		    <div class="form-inline my-2 my-lg-0">
-		    	<form class="float-right" method="POST" action="/logout">
+				<div class="form-inline my-2 my-lg-0">
+					<form method="POST"  style="color:purple" action="/logout">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<button type="submit" class="nav-link btn"
+							style="color: purple">Logout!</button>
+					</form>
+					
+					<form action="/search" method="post">
 					<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" />
-					<button type="submit" class="nav-link" style="color:purple">Logout!</button>
-				</form>
-		     	
-			<form action="/search" method="post" >
-			
-<%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
- --%>		   <input name="name" class="form-control mr-sm-2" type="search" style="background-color: #F9E7E7; color: white; border-color: white;"  placeholder="Search"/>
-		      <button class="btn btn-outline-success my-2 my-sm-0"  style="border-color:pink; color: black" type="submit">Search</button>
-			</form>		    	
-		   
-		  </div>
+							value="${_csrf.token}" />
+						<%-- 		     <form:form method="POST" action="/search" modelAttribute="searchProduct">
+ --%>
+						<input name="name" class="form-control mr-sm-2" type="search"
+							style="background-color: #F9E7E7; color: white; border-color: white;"
+							placeholder="Search" />
+						<button class="btn btn-outline-success my-2 my-sm-0"
+							style="border-color: pink; color: black" type="submit">Search</button>
+					</form>
+				</div>
+				</div>
 		</nav>
 		
-		s
 		
 	<!-- 	WRAPPER TOP  -->
 	<div class="wrappertop">
-	<h1 style="font-family: 'Petit Formal Script', cursive">Welcome, <c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h1>
+	<h1 style="font-family: 'Petit Formal Script', cursive">Welcome, <c:out value="${currentUser.firstName}" />
+				<c:out value="${currentUser.lastName}" /></h1><br>
 	 
     <form:form method="POST" action="/addEvent" modelAttribute="event">
         <p>

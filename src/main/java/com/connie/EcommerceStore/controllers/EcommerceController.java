@@ -43,26 +43,24 @@ public class EcommerceController {
 		this.usersController = usersController;
 	}
 
-//		
-//		@RequestMapping("/edit/{id}")
-//	    public String edit(@PathVariable("id") Long id, @ModelAttribute("editProductObject") Product editProduct, Model model){
-//		Product product1=productService.findProduct(id);
-//		model.addAttribute("products", product1);
-//		return "admin.jsp";
-//		}
-//		
-//	    @RequestMapping(value= "/editProduct/{id}", method=RequestMethod.POST)
-//	    public String editProduct (@PathVariable("id") Long id, @Valid @ModelAttribute("editProductObject") Product product, BindingResult result) {
-//	    	if (result.hasErrors()) {
-//				System.out.println("bbb");
-//				return "admin.jsp";
-//			}
-//			else {
-////		    	Product product1=productService.findProduct(id);
-//				productService.updateProduct(product);
-//				return "redirect:/admin";
-//			}
-//	    }
+	@RequestMapping("/edit/{id}")
+	public String edit(@PathVariable("id") long id, @ModelAttribute("editProductObject") Product editProduct, Model model){
+		Product product1=productService.findProduct(id);
+		model.addAttribute("products", product1);
+		return "admin.jsp";
+	}
+		
+    @RequestMapping(value= "/editProduct/{id}", method=RequestMethod.POST)
+	    public String editProduct (@PathVariable("id") long id, @Valid @ModelAttribute("editProductObject") Product product, BindingResult result) {
+	    	if (result.hasErrors()) {
+				System.out.println("bbb");
+				return "admin.jsp";
+			}
+			else {
+				productService.updateProduct(product);
+				return "redirect:/admin";
+			}
+	    }
 
 	@RequestMapping("/products/{id}/delete")
 	public String delete(@PathVariable("id") long id) {
@@ -76,9 +74,6 @@ public class EcommerceController {
 		Iterable<Product> products = productService.getAllProducts();
 //		System.out.println("products\n" + ((ArrayList<Product>) products).get(0).getName());
 		model.addAttribute("products", products);
-//		int reviews1=reviewService.getAvgRatingByProduct(id); 
-//		System.out.println("in productListy11" + reviews1);
-//		model.addAttribute("products",reviews1);
 		return "productList.jsp";
 	}
 
@@ -159,28 +154,14 @@ public class EcommerceController {
 		return "redirect:/cart";
 	}
 
-//    	
-//    	List<Product> usersProducts= u.getProducts(); 
-//    	usersProducts.add(product2); 
-//    	u.setProducts(usersProducts);
-//    	System.out.println(usersProducts);
-////    	model.addAttribute("products", usersProducts);
-////    	return "cart.jsp";
-//    	return "redirect:/cart";
-//		}
-//		
+
+	//add product in admin page
 	@RequestMapping("/admin/products/new")
 	public String displayAddProductPage(@Valid @ModelAttribute("user") User user, Principal principal, Model model) {
 		usersController.addUserToModel(principal, model);
 		return "addProducts.jsp";
 	}
 
-//	@PostMapping("/admin/products/new")
-//	public String addProduct(@Valid @ModelAttribute("user") User user, BindingResult result, Principal principal, Model model) {
-//		
-//		
-//		return "";
-//	}
 
 	@RequestMapping("/cart")
 	public String Cart(Principal principal, Model model) {
@@ -188,31 +169,21 @@ public class EcommerceController {
 		return "cart.jsp";
 	}
 
+
+	//show each product 
 	@RequestMapping("/show/{id}")
-	public String ShowProduct(@PathVariable Long id, Principal principal, @ModelAttribute("review") Review review,
-			@ModelAttribute("searchProduct") String name, Model model) {
-//		User u = usersController.addUserToModel(principal, model);
+	public String ShowProduct(@PathVariable Long id, Principal principal, @ModelAttribute("review") Review review, @ModelAttribute("searchProduct") String name, Model model) {
 		Product product2 = productService.findProduct(id);
 		model.addAttribute("product", product2);
 		List review2 = product2.getReviews();
 		model.addAttribute("reviews", review2);
-		// show avgrating
-		Integer avg = reviewService.getAvgRatingByProduct(id);
-		model.addAttribute("avgRating", avg);
-
-//		Review newReview = new Review();
-//		newReview.setProduct(product2);
-//		newReview.setRating(5);
-//		model.addAttribute("review",newReview);
+		Integer avg=reviewService.getAvgRatingByProduct(id); 
+		model.addAttribute("avgRating",avg);
 		return "show.jsp";
 	}
+	
 
-	@RequestMapping("/removeEvent/{id}")
-	public String removeEvent(@PathVariable("id") Long id) {
-		eventService.deleteEvent(id);
-		return "redirect:/newEvent";
-	}
-
+	//search bar 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String search(@RequestParam("name") String name, Model model) {
 		System.out.println("in search" + name);
@@ -221,31 +192,31 @@ public class EcommerceController {
 			return "redirect:/productList";
 		}
 		System.out.println("in search111" + productByName.getId());
-		// productByName.getId();
 		model.addAttribute("product", productByName);
 		return "redirect:/show/" + productByName.getId();
-		// return "redirect:/show/{id}"; //or redirect /login
 	}
 
-	@RequestMapping("/events/new")
-	public String newEvent(@ModelAttribute("event") Event Event) {
-		return "form.jsp";
-	}
 
 	@RequestMapping(value = "/showCategoryProduct", method = RequestMethod.POST)
 	public String ShowProductCategory(@RequestParam("category") String category, Model model) {
-		Product productByName = productService.findProductByCategory(category);
-		return "redirect:/show/" + productByName.getId();
-	}
-
-	@RequestMapping("/product/category")
-	public String ShowCat(Principal principal, @RequestParam("email") String email,
-			@ModelAttribute("showProductCat") Product productcat, Model model) {
-
-		User u = usersController.addUserToModel(principal, model);
-
+		List<Product> productsByCategory = productService.findProductByCategory(category);
+		if (productsByCategory == null) {
+			return "redirect:/productList";
+		}
+		model.addAttribute("productCat",productsByCategory);
 		return "showCategory.jsp";
 	}
+
+//	@RequestMapping("/product/category")
+//	public String ShowCat(Principal principal,@RequestParam("category") String category,
+//			@ModelAttribute("showProductCat") Product productcat, Model model) {
+////		Product productByName = productService.findProductByCategory(category);
+//		User u = usersController.addUserToModel(principal, model);
+//		Product productByName = productService.findProductByCategory(category);
+//
+//		model.addAttribute("productsCategory", productByName);
+//		return "showCategory.jsp";
+//	}
 
 	@RequestMapping("/newEvent")
 	public String newEvent(Principal principal, @ModelAttribute("event") Event event, Model model) {
@@ -254,6 +225,17 @@ public class EcommerceController {
 		model.addAttribute("allEvents", event2);
 		model.addAttribute("products", productService.getAllProducts());
 		return "form.jsp";
+	}
+	
+	@RequestMapping("/events/new")
+	public String newEvent(@ModelAttribute("event") Event Event) {
+		return "form.jsp";
+	}
+	
+	@RequestMapping("/removeEvent/{id}")
+	public String removeEvent(@PathVariable("id") Long id) {
+		eventService.deleteEvent(id);
+		return "redirect:/newEvent";
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
@@ -280,24 +262,18 @@ public class EcommerceController {
 			return "show.jsp";
 		} else {
 			System.out.println("in create rate" + review);
-//			System.out.println("in create rate: product id:" + id);
 			User u = usersController.addUserToModel(principal, model);
 			List<Review> review2 = u.getReviews();
 			review.setUser(u);
 			Product product1 = review.getProduct();
 			System.out.println("in creating review:" + product1.getId());
-//			Product product1= productService.findProduct(id); 
-//			review.setProduct(productService.findProduct(id));
 			Review review1 = reviewService.save(review);
-//			return "redirect:/productList"; 
 			return "redirect:/show/" + product1.getId();
 		}
 	}
 
 	@RequestMapping(value = "/deleteReview/{id}")
-	public String removeReview(@PathVariable("id") Long id) {
-//		System.out.println("in delete route: product id:" + id2);
-//		Product product1= productService.findProduct(id2); 
+	public String removeReview(@PathVariable("id") Long id ) {
 		reviewService.deleteReview(id);
 		return "redirect:/productList";
 	}

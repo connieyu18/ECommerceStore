@@ -4,6 +4,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Login Page</title>
 <link
 	href="https://fonts.googleapis.com/css?family=Josefin+Slab|Markazi+Text|Parisienne|Petit+Formal+Script|Pompiere|Rochester&display=swap"
 	rel="stylesheet">
@@ -16,19 +24,22 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+
+<script type="text/javascript" src="js/login.js"></script>
+
+
+	
 <link
 	href="https://fonts.googleapis.com/css?family=Parisienne&display=swap"
 	rel="stylesheet">
-
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta charset="UTF-8">
-<title>Login Page</title>
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   
+   
     <script>
         $(document).ready(function () {
         $('.forgot-pass').click(function(event) {
@@ -40,6 +51,8 @@
         }); 
         });
     </script>
+    
+
 
 </head>
 <body>
@@ -148,4 +161,4 @@
 			</div>
 		</div>
 	</div>
-</body>
+</body> 
