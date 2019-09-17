@@ -34,8 +34,8 @@ public class EcommerceController {
 	private final UsersController usersController;
 	private final ReviewService reviewService;
 
-
-	public EcommerceController(UsersController usersController, ProductService productService, EventService eventService, UserService userService,ReviewService reviewService) {
+	public EcommerceController(UsersController usersController, ProductService productService,
+			EventService eventService, UserService userService, ReviewService reviewService) {
 		this.productService = productService;
 		this.eventService = eventService;
 		this.userService = userService;
@@ -68,8 +68,6 @@ public class EcommerceController {
 		return "redirect:/admin";
 	}
 
-	
-
 	@RequestMapping(value = { "/productList" })
 	public String home(Principal principal, Model model) {
 		User u = usersController.addUserToModel(principal, model);
@@ -79,80 +77,79 @@ public class EcommerceController {
 		return "productList.jsp";
 	}
 
-
+	/**
+	 * Increment the quantity of an order
+	 * @param session
+	 * @param id
+	 * @param model
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping("/cart/{id}")
 	public String Cart(HttpSession session, @PathVariable Long id, Model model, Principal principal) {
-		System.out.println("in checkout");
 		Product product2 = productService.findProduct(id);
-		System.out.println(product2);
-		model.addAttribute("productsInCart", product2);
 		User u = usersController.addUserToModel(principal, model);
-
 		if (session.getAttribute("cart") == null) {
 			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
 			cart.put(product2, 1);
 			session.setAttribute("cart", cart);
 		} else {
 			HashMap<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
-//					int index = this.exists(id, cart);
-//					if (index == -1) {
-			Product p = productService.findProduct(id);
-			System.out.print("******p**********\n" + p);
-			if (!cart.containsKey(p)) {
-				cart.put(p, 1);
-			} else {
-				int count = cart.get(p);
-				cart.put(p, ++count);
 
+//			System.out.print("******p**********\n" + product2);
+			if (!cart.containsKey(product2)) {
+				cart.put(product2, 1);
+			} else {
+				int count = cart.get(product2);
+				cart.put(product2, ++count);
 			}
 			session.setAttribute("cart", cart);
 		}
 		return "redirect:/cart";
 	}
-
+	
+	/**
+	 * Decrements the quantity of an order
+	 * @param session
+	 * @param id
+	 * @param model
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping("/cart/remove/{id}")
 	public String removeItemInCart(HttpSession session, @PathVariable Long id, Model model, Principal principal) {
-		System.out.println("in checkout");
-		
-		Product product2 = productService.findProduct(id);
-		
-		System.out.println(product2);
-		
-		model.addAttribute("productsInCart", product2);
+//		System.out.println("in checkout");
+
+		Product p = productService.findProduct(id);
+
+//		System.out.println(product2);
+
 		User u = usersController.addUserToModel(principal, model);
 
-		if (session.getAttribute("cart") == null) {
-			HashMap<Product, Integer> cart = new HashMap<Product, Integer>();
-			cart.put(product2, 1);
-			session.setAttribute("cart", cart);
-		} else {
+		if (session.getAttribute("cart") != null) {
 			HashMap<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
-//					int index = this.exists(id, cart);
-//					if (index == -1) {
-			Product p = productService.findProduct(id);
-			System.out.print("******p**********\n" + p);
 			if (cart.containsKey(p)) {
 				int count = cart.get(p);
 				if (count >= 1) {
 					cart.put(p, --count);
 				}
-//					} else {
-//						int quantity = cart.get(index).getQuantity() + 1;
-//						cart.get(index).setQuantity(quantity);
-//					}
 			}
 			session.setAttribute("cart", cart);
 		}
 		return "redirect:/cart";
 	}
 
-	//remove product in cart
+	/**
+	 * Delete an order
+	 * @param session
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/remove/{id}")
 	public String remove(HttpSession session, @PathVariable("id") Long id) {
 		HashMap<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
 		Product prod = productService.findProduct(id);
-		System.out.println("babab" + productService.findProduct(id));
-		cart.remove(prod);
+		cart.remove(productService.findProduct(id));
 		session.setAttribute("cart", cart);
 		return "redirect:/cart";
 	}
@@ -169,7 +166,6 @@ public class EcommerceController {
 	@RequestMapping("/cart")
 	public String Cart(Principal principal, Model model) {
 		User u = usersController.addUserToModel(principal, model);
-		System.out.println("bbb" + u.getProducts());
 		return "cart.jsp";
 	}
 
@@ -180,7 +176,6 @@ public class EcommerceController {
 		Product product2 = productService.findProduct(id);
 		model.addAttribute("product", product2);
 		List review2 = product2.getReviews();
-		model.addAttribute("product", product2);
 		model.addAttribute("reviews", review2);
 		Integer avg=reviewService.getAvgRatingByProduct(id); 
 		model.addAttribute("avgRating",avg);
@@ -258,9 +253,10 @@ public class EcommerceController {
 			return "redirect:/newEvent";
 		}
 	}
-	
+
 	@RequestMapping(value = "/createReview", method = RequestMethod.POST)
-	public String addRating(Principal principal, @Valid @ModelAttribute("review") Review review, @RequestParam("rating") int rating, BindingResult result, Model model) {
+	public String addRating(Principal principal, @Valid @ModelAttribute("review") Review review,
+			@RequestParam("rating") int rating, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			System.out.println("in add rating");
 			return "show.jsp";
@@ -269,21 +265,20 @@ public class EcommerceController {
 			User u = usersController.addUserToModel(principal, model);
 			List<Review> review2 = u.getReviews();
 			review.setUser(u);
-			Product product1= review.getProduct();
+			Product product1 = review.getProduct();
 			System.out.println("in creating review:" + product1.getId());
 			Review review1 = reviewService.save(review);
 			return "redirect:/show/" + product1.getId();
 		}
 	}
-	
+
 	@RequestMapping(value = "/deleteReview/{id}")
 	public String removeReview(@PathVariable("id") Long id ) {
 		reviewService.deleteReview(id);
-		return  "redirect:/productList";
+		return "redirect:/productList";
 	}
 }
 //		return  "redirect:/show/" + product1.getId();
-	
 
 //		@RequestMapping("/checkout/{id}")
 //		public String Checkout(HttpSession session, Model model) {
@@ -336,5 +331,3 @@ public class EcommerceController {
 //			return "redirect:/show/" + productByName.getId();
 ////			return "redirect:/show/{id}"; //or redirect /login
 //		}
-
-
